@@ -1,2 +1,2 @@
 # Quiz-Game
-A Quiz Game implentation using C++ and Qt
+A Quiz Game implementation using C++ and Qt
