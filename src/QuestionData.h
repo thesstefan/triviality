@@ -1,67 +1,29 @@
-#include "QuestionData.h"
+#ifndef QUESTIONDATA_H
+#define QUESTIONDATA_H
 
 #include <QString>
-#include <QTextStream>
-#include <QFile>
-#include <QMessageBox>
 
-bool QuestionData::read() {
-    QFile file(":/data.txt");
+#define ANSWERS_NUMBER 4
+#define QUESTIONS_NUMBER 4
 
-    if (file.open(QIODevice::ReadOnly) == false) {
-        QMessageBox::warning(0, "Could not open data file", file.errorString());
+class QuestionData {
+    private:
+        QString question;
+        QString answer[ANSWERS_NUMBER];
 
-        readSuccess = false;
 
-        return true;
-    }
+        bool read();
+        bool readSuccess;
 
-    QTextStream in(&file);
+    public:
+        QuestionData();
+        int correctAnswerIndex;
 
-    question = in.readLine();
+        QString getQuestion() const;
+        QString getAnswer(int answerIndex) const;
 
-    if (question == "")
-        return false;
+        bool isCorrectAnswer(int answerIndex) const;
+        QString getCorrectAnswer() const;
+};
 
-    bool conversionSuccess = true;
-
-    correctAnswerIndex = in.readLine().toInt(&conversionSuccess);
-
-    if (conversionSuccess == false)
-        return false;
-
-    for (int index = 0; index < ANSWERS_NUMBER; index++) {
-        answer[index] = in.readLine();
-
-        if (answer[index] == "")
-            return false;
-    }
-
-    return true;
-}
-
-QuestionData::QuestionData() {
-    if (read() == false) {
-        QMessageBox::warning(0, "Could not read question", file.errorString());
-
-        readSuccess = false;
-    }
-
-    readSuccess = true;
-}
-
-bool QuestionData::isCorrectAnswer(int answerIndex) const {
-    return correctAnswerIndex == answerIndex;
-}
-
-QString QuestionData::getCorrectAnswer() const {
-    return answer[correctAnswerIndex];
-}
-
-QString QuestionData::getQuestion() const {
-    return question;
-}
-
-QString QuestionData::getAnswer(int answerIndex) const {
-    return answer[answerIndex];
-}
+#endif

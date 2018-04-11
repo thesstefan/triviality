@@ -42,7 +42,7 @@ bool QuestionData::read() {
 
 QuestionData::QuestionData() {
     if (read() == false) {
-        QMessageBox::warning(0, "Could not read question", file.errorString());
+        QMessageBox::warning(0, "Could not read question", "ERROR");
 
         readSuccess = false;
     }
