@@ -1,17 +1,21 @@
 QT = widgets
 
 SOURCES += src/main.cpp \
-           src/QuestionData.cpp \
-           src/QuestionWindow.cpp \
-           src/QuestionController.cpp \
+           src/Question.cpp \
+           src/RoundWidget.cpp \
+           src/RoundController.cpp \
            src/PushButton.cpp \
-           src/MainMenu.cpp
+           src/Database.cpp \
+           src/Round.cpp \
+           src/Game.cpp
 
-HEADERS += src/QuestionData.h \
-           src/QuestionWindow.h \
-           src/QuestionController.h \
+HEADERS += src/Question.h \
+           src/RoundWidget.h \
+           src/RoundController.h \
            src/PushButton.h \
-           src/MainMenu.h
+           src/Database.cpp \
+           src/Round.h \
+           src/Game.h
 
 RESOURCES += data/data.qrc
 
