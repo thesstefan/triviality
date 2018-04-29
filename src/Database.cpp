@@ -94,3 +94,7 @@ int Database::write(const QString& fileName) {
 Question Database::getQuestion(int index) const {
     return this->data.at(index);
 }
+
+int Database::size() const {
+    return this->data.size();
+}

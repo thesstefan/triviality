@@ -10,6 +10,8 @@ class PushButton : public QPushButton {
         PushButton(QWidget *parent = 0);
 
         void colorize(bool isCorrect);
+
+        void clearColor();
 };
 
 #endif

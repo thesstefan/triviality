@@ -32,3 +32,13 @@ void PushButton::colorize(bool isCorrect) {
                 "font-size: 35px;"
                 );
 }
+
+void PushButton::clearColor() {
+    this->setStyleSheet(
+            "background-color: rgb(16, 16, 16);"
+            "border: 1px solid #191919;"
+            "color: white;"
+            "font-size: 35px;"
+            );
+}
+

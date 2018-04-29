@@ -24,6 +24,8 @@ class Database {
         Question getQuestion(int index) const;
 
         Question getRandomQuestion() const;
+
+        int size() const;
 };
 
 #endif
