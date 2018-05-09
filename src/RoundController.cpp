@@ -1,12 +1,12 @@
 #include "RoundController.h"
 
-RoundController::RoundController(const Question& question, RoundWidget *widget) {
+#include <QTimer>
+
+RoundController::RoundController(const Question& question, RoundWidget *widget, QObject *parent) : QObject(parent) {
     this->question = question;
 
     this->widget = widget;
 }
-
-RoundController::~RoundController() {}
 
 void RoundController::sync() {
     this->widget->updateLabel(this->question.getQuestion());
@@ -18,17 +18,31 @@ void RoundController::sync() {
     }
 }
 
+void RoundController::endRound() {
+    emit roundEnded(this->isCorrect);
+}
+
 void RoundController::buttonClicked() {
     QObject *sender = QObject::sender();
 
     PushButton *clickedButton = qobject_cast<PushButton *>(sender);
 
-    bool isCorrect = true;
+    this->isCorrect = true;
 
     if (clickedButton != this->widget->getButton(this->question.getCorrectAnswerIndex()))
-        isCorrect = false;
+        this->isCorrect = false;
 
-    clickedButton->colorize(isCorrect);
+    clickedButton->colorize(this->isCorrect);
 
-    emit roundEnded(isCorrect);
+    // Disable buttons to avoid multiple endRound() signals emitted.
+    this->widget->disableButtons();
+
+    // Wait 500ms before ending the Round.
+    QTimer *timer = new QTimer(this);
+
+    timer->setSingleShot(true);
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(endRound()));
+
+    timer->start(500);
 }

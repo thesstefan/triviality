@@ -1,30 +1,36 @@
 #include "Round.h"
 
-Round::Round(const Question& question, RoundWidget *widget) {
-    this->widget = widget;
+#include <QTimer>
 
+Round::Round(const Question& question, QObject *parent) : QObject(parent) {
     this->question = question;
 
-    this->controller = new RoundController(this->question, this->widget);
+    this->widget = new RoundWidget();
+
+    this->controller = new RoundController(this->question, this->widget, this);
 
     QObject::connect(this->controller, SIGNAL(roundEnded(bool)), this, SLOT(end(bool)));
 }
 
-Round::~Round() {
-    delete this->controller;
-}
-
 void Round::start() {
     this->controller->sync();
+
+    emit windowNeedsUpdate();
 }
 
 void Round::end(bool isCorrect) {
     if (isCorrect)
         this->score += 10;
 
+    this->widget->deleteLater();
+
     emit next();
 }
 
 int Round::getScore() const {
     return this->score;
+}
+
+RoundWidget *Round::getWidget() {
+    return this->widget;
 }

@@ -1,26 +1,23 @@
 #include <QApplication>
 
+#include <iostream>
+
 #include "Game.h"
 #include "Database.h"
 #include "Question.h"
 #include "Round.h"
+#include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     Database database(":/data.txt");
 
-    database.read();
+    MainWindow *window = new MainWindow();
 
-    Question question = database.getQuestion(0);
+    Game *game = new Game(&database, window);
 
-    RoundWidget *widget = new RoundWidget();
-
-    widget->show();
-
-    Game *game = new Game(&database, widget);
-
-    game->startNewRound();
+    game->start();
 
     return app.exec();
 }

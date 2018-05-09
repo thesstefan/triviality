@@ -23,6 +23,8 @@ class RoundWidget : public QWidget {
         void updateButton(const QString& text, int index);
     
         const PushButton *getButton(int index) const;
+
+        void disableButtons();
 };
 
 #endif

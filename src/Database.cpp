@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <iostream>
+
 #include "Database.h"
 
 #define FAIL 1
@@ -10,6 +12,8 @@
 
 Database::Database(const QString& fileName) {
     this->data = QList<Question>();
+
+    this->entriesUsed = QList<int>();
 
     this->fileName = fileName;
 }
@@ -29,7 +33,7 @@ int Database::read() {
 
     in >> this->entries >> newline >> newline;
 
-    for (int entryIndex = 0; entryIndex < entries; entryIndex++) {
+    for (int entryIndex = 0; entryIndex < this->entries; entryIndex++) {
         Question question;
 
         QString input = in.readLine();
@@ -91,8 +95,16 @@ int Database::write(const QString& fileName) {
     return SUCCESS;
 }
 
+void Database::markEntryUsed(int entryIndex) {
+    this->entriesUsed.append(entryIndex);
+}
+
 Question Database::getQuestion(int index) const {
     return this->data.at(index);
+}
+
+bool Database::isEntryUsed(int entryIndex) const {
+    return this->entriesUsed.contains(entryIndex);
 }
 
 int Database::size() const {

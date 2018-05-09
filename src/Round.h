@@ -22,17 +22,19 @@ class Round : public QObject {
     signals:
         void next();
 
+        void windowNeedsUpdate();
+
     public slots:
         void end(bool isCorrect);
 
     public:
-        Round(const Question& question, RoundWidget *widget);
-
-        ~Round();
+        Round(const Question& question, QObject *parent = 0);
 
         void start();
 
         int getScore() const;
+
+        RoundWidget *getWidget();
 };
 
 #endif

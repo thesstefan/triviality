@@ -10,9 +10,7 @@ class RoundController : public QObject {
     Q_OBJECT
 
     public:
-        RoundController(const Question& question, RoundWidget *widget);
-
-        ~RoundController();
+        RoundController(const Question& question, RoundWidget *widget, QObject *parent = 0);
 
         void sync();
 
@@ -22,7 +20,11 @@ class RoundController : public QObject {
     public slots:
         void buttonClicked();
 
+        void endRound();
+
     private:
+        bool isCorrect;
+
         Question question;
 
         RoundWidget *widget;

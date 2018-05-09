@@ -7,7 +7,9 @@ SOURCES += src/main.cpp \
            src/PushButton.cpp \
            src/Database.cpp \
            src/Round.cpp \
-           src/Game.cpp
+           src/Game.cpp \
+           src/MainWindow.cpp \
+           src/ScoreWidget.cpp
 
 HEADERS += src/Question.h \
            src/RoundWidget.h \
@@ -15,7 +17,9 @@ HEADERS += src/Question.h \
            src/PushButton.h \
            src/Database.cpp \
            src/Round.h \
-           src/Game.h
+           src/Game.h \
+           src/MainWindow.h \
+           src/ScoreWidget.h \
 
 RESOURCES += data/data.qrc
 

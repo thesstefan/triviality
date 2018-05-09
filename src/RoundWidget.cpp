@@ -42,11 +42,13 @@ void RoundWidget::updateLabel(const QString& text) {
 
 void RoundWidget::updateButton(const QString& text, int index) {
     this->answerButton[index]->setText(text);
-
-    this->answerButton[index]->clearColor();
 }
 
 const PushButton *RoundWidget::getButton(int index) const {
     return this->answerButton[index];
 }
 
+void RoundWidget::disableButtons() {
+    for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
+        this->answerButton[buttonIndex]->setEnabled(false);
+}

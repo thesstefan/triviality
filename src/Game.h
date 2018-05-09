@@ -7,6 +7,7 @@
 #include "Database.h"
 
 #include "Round.h"
+#include "MainWindow.h"
 
 #define ROUNDS_NUMBER 7
 
@@ -14,17 +15,23 @@ class Game : public QObject {
     Q_OBJECT
 
     public:
-        Game(Database *data, RoundWidget *widget);
+        Game(Database *data, MainWindow *widget);
 
         void startNewRound();
+
+        void start();
 
     public slots:
         void nextRound();
 
+        void updateWindow();
+
+        void deleteRound();
+
     private:
         Database *data;
 
-        RoundWidget *widget;
+        MainWindow *window;
 
         int roundsPassed;
 
@@ -33,6 +40,8 @@ class Game : public QObject {
         QRandomGenerator *generator;
 
         Round *currentRound;
+
+        void showScore();
 };
 
 #endif

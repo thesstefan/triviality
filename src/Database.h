@@ -14,6 +14,8 @@ class Database {
 
         int entries;
 
+        QList<int> entriesUsed;
+
     public:
         Database(const QString& fileName);
 
@@ -23,7 +25,9 @@ class Database {
 
         Question getQuestion(int index) const;
 
-        Question getRandomQuestion() const;
+        bool isEntryUsed(int entryIndex) const;
+
+        void markEntryUsed(int entryIndex);
 
         int size() const;
 };
