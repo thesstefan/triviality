@@ -24,3 +24,10 @@ class ReadFail : public Exception {
 
         const char *what() const noexcept;
 };
+
+class EntryReadFail : public Exception {
+    public:
+        EntryReadFail(const std::string &message);
+
+        const char *what() const noexcept;
+};

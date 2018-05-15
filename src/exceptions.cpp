@@ -13,3 +13,9 @@ ReadFail::ReadFail(const std::string& message) : Exception(message) {}
 const char *ReadFail::what() const noexcept {
     return this->message.c_str();
 }
+
+EntryReadFail::EntryReadFail(const std::string& message) : Exception(message) {}
+
+const char *EntryReadFail::what() const noexcept {
+    return this->message.c_str();
+}
