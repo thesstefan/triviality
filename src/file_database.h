@@ -7,6 +7,8 @@
 
 class FileDatabase : public Database {
     private:
+        QString fileName;
+
         void addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
 
         void readEntry(QTextStream& stream);

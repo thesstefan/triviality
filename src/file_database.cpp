@@ -4,7 +4,9 @@
 #include "exceptions.h"
 #include "file_database.h"
 
-FileDatabase::FileDatabase(const QString& fileName) : Database(fileName) {}
+FileDatabase::FileDatabase(const QString& fileName) : Database() {
+    this->fileName = fileName;
+}
 
 void FileDatabase::addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
     Question entry;

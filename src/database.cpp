@@ -4,9 +4,7 @@
 #include "database.h"
 #include "exceptions.h"
 
-Database::Database(const QString& fileName) {
-    this->fileName = fileName;
-}
+Database::Database() {}
 
 Question Database::getQuestion(int questionIndex) const {
     return this->data.at(questionIndex);
