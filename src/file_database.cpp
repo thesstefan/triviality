@@ -6,64 +6,62 @@
 
 FileDatabase::FileDatabase(const QString& fileName) : Database(fileName) {}
 
-void FileDatabase::read() {
-    QFile file(this->sourceName);
+void FileDatabase::addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
+    Question entry;
 
-    if (file.open(QIODevice::ReadOnly) == false) 
-        throw OpenFail("Could not open data file in FileDatabase::read()");
+    entry.setQuestion(question);
+    entry.setCorrectAnswerIndex(correctAnswerIndex);
 
-    QTextStream in(&file);
+    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
+        entry.setAnswer(answers.at(answerIndex), answerIndex);
+
+    this->data.append(entry);
+}
+
+void FileDatabase::readEntry(QTextStream& in) {
+    QString question = in.readLine();
+
+    if (question == "")
+        throw EntryReadFail("Could not read entry.");
 
     char newline;
 
-    // Used for better exception description.
-    int lineIndex = 0;
+    int correctAnswerIndex = -1;
 
-    in >> this->entries >> newline >> newline;
+    in >> correctAnswerIndex >> newline;
 
-    lineIndex += 2;
+    if (correctAnswerIndex < 0 || correctAnswerIndex > 3)
+        throw EntryReadFail("Cold not read entry.");
 
-    for (int entryIndex = 0; entryIndex < this->entries; entryIndex++) {
-        Question question;
+    QList<QString> answers;
 
+    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++) {
         QString input = in.readLine();
 
-        lineIndex++;
+        if (input == "")
+            throw EntryReadFail("Could not read entry.");
 
-        if (input == "") {
-            std::string message = "Question seems to be blank -> Line " + std::to_string(lineIndex) + ".";
+        answers.append(input);
+    }
 
-            throw ReadFail(message);
+    in >> newline;
+
+    this->addEntry(question, correctAnswerIndex, answers);
+}
+
+void FileDatabase::read() {
+    QFile file(this->fileName);
+
+    if (file.open(QIODevice::ReadOnly) == false) 
+        throw OpenFail("Could not open file.");
+
+    QTextStream in(&file);
+
+    while (in.atEnd() == false) {
+        try {
+            readEntry(in);
+        } catch (const EntryReadFail& exception) {
+            throw ReadFail("Could not read file.");
         }
-
-        question.setQuestion(input);
-
-        int index;
-
-        in >> index >> newline;
-
-        lineIndex += 1;
-
-        question.setCorrectAnswerIndex(index);
-
-        for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++) {
-            input = in.readLine();
-
-            lineIndex++;
-
-            if (input == "") {
-                std::string message = "Answer " + std::to_string(answerIndex + 1) + " seems to be blank -> Line " + std::to_string(lineIndex) + ".";
-
-                throw ReadFail(message);
-            }
-
-            question.setAnswer(input, answerIndex);
-        }
-
-        in >> newline;
-
-        lineIndex++;
-
-        this->data.append(question);
     }
 }

@@ -10,14 +10,12 @@ class Database {
     protected:
         QList<Question> data;
 
-        int entries;
-
-        QString sourceName;
+        QString fileName;
 
         QList<int> entriesUsed;
 
     public:
-        Database(const QString& sourceName);
+        Database(const QString& fileName);
 
         virtual void read() = 0;
 

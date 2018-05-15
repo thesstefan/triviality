@@ -4,8 +4,8 @@
 #include "database.h"
 #include "exceptions.h"
 
-Database::Database(const QString& sourceName) {
-    this->sourceName = sourceName;
+Database::Database(const QString& fileName) {
+    this->fileName = fileName;
 }
 
 Question Database::getQuestion(int questionIndex) const {
@@ -32,9 +32,9 @@ void Database::write(const QString& outputFile) {
 
     QTextStream out(&file);
 
-    out << "Database size : " << this->data.size() << " Questions" << endl << endl;
+    out << "Database size : " << this->size() << " Questions" << endl << endl;
 
-    for (int entryIndex = 0; entryIndex < this->entries; entryIndex++) {
+    for (int entryIndex = 0; entryIndex < this->size(); entryIndex++) {
         Question question = this->data.at(entryIndex);
 
         out << question.getQuestion() << endl;
