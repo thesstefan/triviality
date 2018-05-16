@@ -1,23 +1,21 @@
-#include <QApplication>
-
+#include <QDebug>
 #include <iostream>
 
-#include "Game.h"
-#include "Database.h"
-#include "Question.h"
-#include "Round.h"
-#include "MainWindow.h"
+#include "exceptions.h"
+#include "file_database.h"
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+    FileDatabase *database;
+    
+    try {
+        database = new FileDatabase(":/data.txt");
+    } catch (const Exception& exception) {
+        std::cout << exception.what() << std::endl;
+    }
 
-    Database database(":/data.txt");
+    database->write("output.txt");
 
-    MainWindow *window = new MainWindow();
+    delete database;
 
-    Game *game = new Game(&database, window);
-
-    game->start();
-
-    return app.exec();
+    return 0;
 }
