@@ -5,21 +5,25 @@ SOURCES += src/main.cpp \
            src/RoundWidget.cpp \
            src/RoundController.cpp \
            src/PushButton.cpp \
-           src/Database.cpp \
+           src/database.cpp \
+           src/file_database.cpp \
            src/Round.cpp \
            src/Game.cpp \
            src/MainWindow.cpp \
-           src/ScoreWidget.cpp
+           src/ScoreWidget.cpp \
+           src/exceptions.cpp
 
 HEADERS += src/Question.h \
            src/RoundWidget.h \
            src/RoundController.h \
            src/PushButton.h \
-           src/Database.cpp \
+           src/database.h \
+           src/file_database.h \
            src/Round.h \
            src/Game.h \
            src/MainWindow.h \
            src/ScoreWidget.h \
+           src/exceptions.h
 
 RESOURCES += data/data.qrc
 
@@ -28,3 +32,5 @@ MOC_DIR = build
 RCC_DIR = data
 
 TARGET = quiz
+
+DEFINES += DEBUG
