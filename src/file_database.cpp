@@ -1,11 +1,32 @@
 #include <QTextStream>
 #include <QFile>
 
+#include <QDebug>
+
 #include "exceptions.h"
 #include "file_database.h"
 
 FileDatabase::FileDatabase(const QString& fileName) : Database() {
-    this->fileName = fileName;
+    this->file = new QFile(fileName);
+
+    if (file->open(QIODevice::ReadOnly) == false) 
+        throw OpenFail("Could not open file.");
+
+    this->stream = new QTextStream(this->file);
+
+    try {
+        this->readAll();
+    } catch (const Exception& exception) {
+        throw;
+    }
+}
+
+FileDatabase::~FileDatabase() {
+    delete this->stream;
+
+    this->file->close();
+
+    delete this->file;
 }
 
 void FileDatabase::addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
@@ -20,8 +41,8 @@ void FileDatabase::addEntry(const QString& question, int correctAnswerIndex, con
     this->data.append(entry);
 }
 
-void FileDatabase::readEntry(QTextStream& in) {
-    QString question = in.readLine();
+void FileDatabase::read() {
+    QString question = this->stream->readLine();
 
     if (question == "")
         throw EntryReadFail("Could not read entry.");
@@ -30,7 +51,7 @@ void FileDatabase::readEntry(QTextStream& in) {
 
     int correctAnswerIndex = -1;
 
-    in >> correctAnswerIndex >> newline;
+    *(this->stream) >> correctAnswerIndex >> newline;
 
     if (correctAnswerIndex < 0 || correctAnswerIndex > 3)
         throw EntryReadFail("Cold not read entry.");
@@ -38,7 +59,7 @@ void FileDatabase::readEntry(QTextStream& in) {
     QList<QString> answers;
 
     for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++) {
-        QString input = in.readLine();
+        QString input = stream->readLine();
 
         if (input == "")
             throw EntryReadFail("Could not read entry.");
@@ -46,22 +67,15 @@ void FileDatabase::readEntry(QTextStream& in) {
         answers.append(input);
     }
 
-    in >> newline;
+    *(this->stream) >> newline;
 
     this->addEntry(question, correctAnswerIndex, answers);
 }
 
-void FileDatabase::read() {
-    QFile file(this->fileName);
-
-    if (file.open(QIODevice::ReadOnly) == false) 
-        throw OpenFail("Could not open file.");
-
-    QTextStream in(&file);
-
-    while (in.atEnd() == false) {
+void FileDatabase::readAll() {
+    while (this->stream->atEnd() == false) {
         try {
-            readEntry(in);
+            read();
         } catch (const EntryReadFail& exception) {
             throw ReadFail("Could not read file.");
         }

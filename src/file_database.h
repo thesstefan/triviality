@@ -4,19 +4,24 @@
 #include "database.h"
 
 #include <QTextStream>
+#include <QFile>
 
 class FileDatabase : public Database {
     private:
-        QString fileName;
+        QTextStream *stream;
 
-        void addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
+        QFile *file;
 
-        void readEntry(QTextStream& stream);
+        void read();
+
+        void readAll();
 
     public:
         FileDatabase(const QString& fileName);
 
-        void read();
+        ~FileDatabase();
+
+        void addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
 };
 
 #endif

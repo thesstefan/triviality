@@ -1,10 +1,14 @@
 #include <QTextStream>
 #include <QFile>
 
+#include <QDebug>
+
 #include "database.h"
 #include "exceptions.h"
 
 Database::Database() {}
+
+Database::~Database() {}
 
 Question Database::getQuestion(int questionIndex) const {
     return this->data.at(questionIndex);
@@ -22,6 +26,7 @@ int Database::size() const {
     return this->data.size();
 }
 
+#ifdef DEBUG
 void Database::write(const QString& outputFile) {
     QFile file(outputFile);
 
@@ -45,3 +50,4 @@ void Database::write(const QString& outputFile) {
         out << endl;
     }
 }
+#endif

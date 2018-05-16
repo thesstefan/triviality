@@ -12,13 +12,16 @@ class Database {
 
         QList<int> entriesUsed;
 
+        virtual void read() = 0;
+
     public:
         Database();
 
-        virtual void read() = 0;
+        virtual ~Database();
 
-        // Used for debugging. Write only to standard file.
+#ifdef DEBUG
         void write(const QString& output);
+#endif
 
         Question getQuestion(int questionIndex) const;
 
