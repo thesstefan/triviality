@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     }
 
     try {
-        FileDatabase *database;
+        Database *database;
 
         database = new FileDatabase(argv[1]);
 
