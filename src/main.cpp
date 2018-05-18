@@ -10,17 +10,16 @@ int main(int argc, char *argv[]) {
         std::cout << "Usage: ./quiz databaseFileName" << std::endl;
     }
 
-    FileDatabase *database;
-    
     try {
+        FileDatabase *database;
+
         database = new FileDatabase(argv[1]);
+
+        database->write("output.txt");
+        delete database;
     } catch (const Exception& exception) {
         std::cout << exception.what() << std::endl;
     }
-
-    database->write("output.txt");
-
-    delete database;
 
     return 0;
 }
