@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
         database->write("output.txt");
         delete database;
     } catch (const Exception& exception) {
-        std::cout << exception.what() << std::endl;
+        std::cerr << exception.what() << std::endl;
     }
 
     return 0;
