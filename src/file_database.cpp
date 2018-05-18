@@ -9,8 +9,13 @@
 FileDatabase::FileDatabase(const QString& fileName) : Database() {
     this->file = new QFile(fileName);
 
-    if (file->open(QIODevice::ReadOnly) == false) 
-        throw OpenFail("Could not open file.");
+    if (!this->file->exists())
+        throw OpenFail("Could not open file: the file does not exist");
+
+    if (file->open(QIODevice::ReadOnly) == false) {
+        QString errorMsg = "Could not open file: " + this->file->errorString();
+        throw OpenFail(errorMsg.toStdString());
+    }
 
     this->stream = new QTextStream(this->file);
 
