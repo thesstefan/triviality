@@ -1,8 +1,6 @@
 #include <QTextStream>
 #include <QFile>
 
-#include <QDebug>
-
 #include "exceptions.h"
 #include "file_database.h"
 
