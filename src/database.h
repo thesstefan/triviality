@@ -4,7 +4,7 @@
 #include <QList>
 #include <QString>
 
-#include "Question.h"
+#include "question.h"
 
 class Database {
     protected:
