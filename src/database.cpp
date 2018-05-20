@@ -28,19 +28,22 @@ int Database::size() const {
 void Database::write(const QString& outputFile) {
     QFile file(outputFile);
 
-    if (file.open(QIODevice::WriteOnly) == false)
-        throw OpenFail("Could not open output file in Database::write()");
+    if (file.open(QIODevice::WriteOnly) == false) {
+        QString errorMsg = "Could not open output file : " + file.errorString();
+
+        throw OpenFail(errorMsg.toStdString());
+    }
 
     QTextStream out(&file);
 
-    out << "Database size : " << this->size() << " Questions" << endl << endl;
+    out << "Database Size : " << this->size() << " Questions" << endl << endl;
 
     for (int entryIndex = 0; entryIndex < this->size(); entryIndex++) {
         Question question = this->data.at(entryIndex);
 
         out << question.getQuestion() << endl;
 
-        out << question.getCorrectAnswerIndex() << endl;
+        out << "Correct Answers : " << question.getCorrectAnswer() << endl;
 
         for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
             out << question.getAnswer(answerIndex) << endl;
