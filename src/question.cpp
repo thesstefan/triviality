@@ -1,14 +1,12 @@
 #include "question.h"
 
-Question::Question() {
-    this->setQuestion("EMPTY");
+Question::Question(const QString& question, int correctAnswerIndex, QList<Question> answers) {
+    this->setQuestion(question);
 
-    this->setAnswer("EMPTY", 0);
-    this->setAnswer("EMPTY", 1);
-    this->setAnswer("EMPTY", 3);
-    this->setAnswer("EMPTY", 3);
+    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
+        this->setAnswer(answers.at(answerIndex), answerIndex);
 
-    this->setCorrectAnswerIndex(0);
+    this->setCorrectAnswerIndex(correctAnswerIndex);
 }
 
 QString Question::getQuestion() const {
@@ -17,10 +15,6 @@ QString Question::getQuestion() const {
 
 QString Question::getAnswer(int answerIndex) const {
     return this->answer[answerIndex];
-}
-
-int Question::getCorrectAnswerIndex() const {
-    return this->correctAnswerIndex;
 }
 
 void Question::setQuestion(const QString& question) {
@@ -37,8 +31,4 @@ void Question::setCorrectAnswerIndex(int index) {
 
 bool Question::isCorrectAnswer(int answerIndex) const {
     return this->correctAnswerIndex == answerIndex;
-}
-
-QString Question::getCorrectAnswer() const {
-    return answer[correctAnswerIndex];
 }

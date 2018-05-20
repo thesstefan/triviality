@@ -20,8 +20,6 @@ class FileDatabase : public Database {
         FileDatabase(const QString& fileName);
 
         ~FileDatabase();
-
-        void addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
 };
 
 #endif

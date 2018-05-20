@@ -23,4 +23,4 @@ class ScoreWidget : public QWidget {
         PushButton *backButton;
 };
 
-#endif
+#endif 

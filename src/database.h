@@ -23,6 +23,8 @@ class Database {
         void write(const QString& output);
 #endif
 
+        void addQuestion(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
+
         Question getQuestion(int questionIndex) const;
 
         void markEntryUsed(int entryIndex);
