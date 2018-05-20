@@ -17,6 +17,10 @@ QString Question::getAnswer(int answerIndex) const {
     return this->answer[answerIndex];
 }
 
+QString Question::getCorrectAnswer() const {
+    return this->answer[this->correctAnswerIndex];
+}
+
 void Question::setQuestion(const QString& question) {
     this->question = question;
 }

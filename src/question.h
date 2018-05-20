@@ -18,6 +18,7 @@ class Question {
 
         QString getQuestion() const;
         QString getAnswer(int answerIndex) const;
+        QString getCorrectAnswer() const;
 
         void setQuestion(const QString& question);
         void setAnswer(const QString& answer, int index);
