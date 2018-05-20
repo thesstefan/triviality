@@ -1,0 +1,1 @@
+#define ANSWERS_NUMBER 4

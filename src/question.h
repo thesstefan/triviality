@@ -4,8 +4,6 @@
 #include <QString>
 #include <QList>
 
-#define ANSWERS_NUMBER 4
-
 class Question {
     private:
         QString question;
