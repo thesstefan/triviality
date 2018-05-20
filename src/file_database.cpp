@@ -38,11 +38,13 @@ void FileDatabase::read() {
     if (question == "")
         throw EntryReadFail("Could not read entry.");
 
-    char newline;
+    QString tempInput;
 
-    int correctAnswerIndex = -1;
+    bool convertionStatus = true;
 
-    *(this->stream) >> correctAnswerIndex >> newline;
+    tempInput = this->stream->readLine();
+
+    int correctAnswerIndex = tempInput.trimmed().toInt(&convertionStatus);
 
     if (correctAnswerIndex < 0 || correctAnswerIndex > 3)
         throw EntryReadFail("Cold not read entry.");
@@ -50,15 +52,15 @@ void FileDatabase::read() {
     QList<QString> answers;
 
     for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++) {
-        QString input = stream->readLine();
+        tempInput = this->stream->readLine();
 
-        if (input == "")
+        if (tempInput == "")
             throw EntryReadFail("Could not read entry.");
 
-        answers.append(input);
+        answers.append(tempInput);
     }
 
-    *(this->stream) >> newline;
+    this->stream->readLine();
 
     Question entry(question, correctAnswerIndex, answers);
 
@@ -70,7 +72,7 @@ void FileDatabase::readAll() {
         try {
             read();
         } catch (const EntryReadFail& exception) {
-            throw ReadFail("Could not read file.");
+            throw ReadFail("Could not read file : Entry reading fail.");
         }
     }
 }
