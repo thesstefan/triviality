@@ -4,6 +4,8 @@
 #include <QString>
 #include <QList>
 
+#include "macros.h"
+
 class Question {
     private:
         QString question;
