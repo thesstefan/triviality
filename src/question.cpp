@@ -1,6 +1,6 @@
 #include "question.h"
 
-Question::Question(const QString& question, int correctAnswerIndex, const QList<Question>& answers) {
+Question::Question(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
     this->setQuestion(question);
 
     for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
