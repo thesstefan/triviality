@@ -20,10 +20,6 @@ class Question {
         QString getAnswer(int answerIndex) const;
         QString getCorrectAnswer() const;
 
-        void setQuestion(const QString& question);
-        void setAnswer(const QString& answer, int index);
-        void setCorrectAnswerIndex(int index);
-
         bool isCorrectAnswer(int answerIndex) const;
 };
 
