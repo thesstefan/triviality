@@ -34,18 +34,6 @@ FileDatabase::~FileDatabase() {
     delete this->file;
 }
 
-void FileDatabase::addEntry(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
-    Question entry;
-
-    entry.setQuestion(question);
-    entry.setCorrectAnswerIndex(correctAnswerIndex);
-
-    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
-        entry.setAnswer(answers.at(answerIndex), answerIndex);
-
-    this->data.append(entry);
-}
-
 void FileDatabase::read() {
     QString question = this->stream->readLine();
 
@@ -74,7 +62,9 @@ void FileDatabase::read() {
 
     *(this->stream) >> newline;
 
-    this->addEntry(question, correctAnswerIndex, answers);
+    Question entry(question, correctAnswerIndex, answers);
+
+    this->data.append(entry);
 }
 
 void FileDatabase::readAll() {
