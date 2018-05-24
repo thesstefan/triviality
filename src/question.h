@@ -1,7 +1,7 @@
 /**
  * @file question.h
  *
- * This module provides the implementation of Question.
+ * This module provides the interface of Question.
  */
 
 #ifndef QUESTION_H
@@ -15,7 +15,11 @@
 /**
  * @class Question
  *
- * @brief A class implementation of a question-type structure.
+ * @brief This class encapsulates and manages the data of a classic multiple-answer question.
+ *
+ * It contains the question's text and texts of ANSWERS_NUMBER answers, of whom only one is correct.
+ *
+ * It also allows access to the data, providing getter functions.
  */
 class Question {
     private:
@@ -26,8 +30,6 @@ class Question {
 
     public:
         /**
-         * @brief Constructs the Question.
-         *
          * @param question Question text.
          *
          * @param correctAnswerIndex Index of the correct answer.
@@ -47,24 +49,18 @@ class Question {
          * @brief Returns an answer.
          *
          * @param answerIndex The index of the answer to be returned.
-         *
-         * @return The answer at @p answerIndex.
          */
         QString getAnswer(int answerIndex) const;
 
         /**
          * @brief Returns the correct answer.
-         *
-         * @return The correct answer.
          */
         QString getCorrectAnswer() const;
 
         /**
-         * @brief Returns if an answer is correct.
+         * @brief Returns if an answer is correct or not.
          *
          * @param answerIndex The index of the answer to be checked if it's correct.
-         *
-         * @return @b true if the answer at @p answerIndex is correct, @b false otherwise.
          */
         bool isCorrectAnswer(int answerIndex) const;
 };
