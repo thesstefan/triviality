@@ -31,3 +31,10 @@ class EntryReadFail : public Exception {
 
         const char *what() const noexcept;
 };
+
+class OutOfBounds : public Exception {
+    public:
+        OutOfBounds(const std::string &message);
+
+        const char *what() const noexcept;
+};

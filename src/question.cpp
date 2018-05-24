@@ -1,5 +1,7 @@
 #include "question.h"
 
+#include "exceptions.h"
+
 Question::Question(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
     this->question = question;
 
@@ -14,6 +16,9 @@ QString Question::getQuestion() const {
 }
 
 QString Question::getAnswer(int answerIndex) const {
+    if (answerIndex < 0 || answerIndex > ANSWERS_NUMBER)
+        throw OutOfBounds("Question::getAnswer() -> index is out of bounds.");
+
     return this->answer[answerIndex];
 }
 
