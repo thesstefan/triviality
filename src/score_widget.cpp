@@ -1,4 +1,4 @@
-#include "ScoreWidget.h"
+#include "score_widget.h"
 
 #include <QString>
 #include <QVBoxLayout>

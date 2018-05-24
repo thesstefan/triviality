@@ -4,10 +4,10 @@
 #include <QObject>
 #include <QRandomGenerator>
 
-#include "Database.h"
+#include "database.h"
 
-#include "Round.h"
-#include "MainWindow.h"
+#include "round.h"
+#include "main_window.h"
 
 #define ROUNDS_NUMBER 7
 

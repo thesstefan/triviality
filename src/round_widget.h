@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "PushButton.h"
+#include "push_button.h"
 
 #define ANSWERS_NUMBER 4
 

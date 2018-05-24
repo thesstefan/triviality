@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "Question.h"
-#include "RoundWidget.h"
+#include "question.h"
+#include "round_widget.h"
 
 class RoundController : public QObject {
     Q_OBJECT

@@ -2,7 +2,7 @@
 
 #include <QVBoxLayout>
 
-#include "RoundWidget.h"
+#include "round_widget.h"
 
 RoundWidget::RoundWidget(QWidget *parent) : QWidget(parent) {
     this->setStyleSheet(

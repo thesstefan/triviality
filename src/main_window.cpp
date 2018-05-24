@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "main_window.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     this->setStyleSheet(

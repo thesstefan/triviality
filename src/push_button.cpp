@@ -1,6 +1,6 @@
 #include <QPushButton>
 
-#include "PushButton.h"
+#include "push_button.h"
 
 PushButton::PushButton(QWidget *parent) : QPushButton(parent) {
     this->setFlat(true);

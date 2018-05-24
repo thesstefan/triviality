@@ -3,9 +3,9 @@
 
 #include <QObject>
 
-#include "Question.h"
-#include "RoundController.h"
-#include "RoundWidget.h"
+#include "question.h"
+#include "round_controller.h"
+#include "round_widget.h"
 
 class Round : public QObject {
     Q_OBJECT

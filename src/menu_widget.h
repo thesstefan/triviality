@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "PushButton.h"
+#include "push_button.h"
 
 class MainWidget : public QWidget {
     Q_OBJECT

@@ -2,7 +2,7 @@
 
 #include <QVBoxLayout>
 
-#include "MenuWidget.h"
+#include "menu_widget.h"
 
 MenuWidget::MenuWidget(QWidget *parent) : QWidget(parent) {
     this->setStyleSheet(

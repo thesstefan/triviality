@@ -1,12 +1,10 @@
-#include "Game.h"
-#include "ScoreWidget.h"
+#include "game.h"
+#include "score_widget.h"
 
 #include <QTime>
 #include <QThread>
 
 #include <QTimer>
-
-#include <iostream>
 
 Game::Game(Database *data, MainWindow *window) {
     this->data = data;

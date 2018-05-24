@@ -5,7 +5,7 @@
 
 #include <QLabel>
 
-#include "PushButton.h"
+#include "push_button.h"
 
 class ScoreWidget : public QWidget {
     Q_OBJECT
