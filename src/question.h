@@ -23,9 +23,21 @@
  */
 class Question {
     private:
+        /**
+         * @brief The text of the question.
+         */
         QString question;
+
+        /**
+         * @brief The answers to the question.
+         *
+         * There are ANSWERS_NUMBER answers.
+         */
         QString answer[ANSWERS_NUMBER];
 
+        /**
+         * @brief The index of the correct answer to the question.
+         */
         int correctAnswerIndex;
 
     public:
