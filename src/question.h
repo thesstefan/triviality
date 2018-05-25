@@ -17,7 +17,7 @@
  *
  * @brief This class encapsulates and manages the data of a classic multiple-answer question.
  *
- * It contains the question's text and texts of ANSWERS_NUMBER answers, of whom only one is correct.
+ * It contains the question's text and texts of @ref ANSWERS_NUMBER answers, of whom only one is correct.
  *
  * It also allows access to the data, providing getter functions.
  */
@@ -30,25 +30,27 @@ class Question {
 
     public:
         /**
-         * @param question Question text.
+         * @param question -> The text of the question.
          *
-         * @param correctAnswerIndex Index of the correct answer.
+         * @param answers -> List of answers.
          *
-         * @param answers List of answers.
+         * @param correctAnswerIndex -> Index of the correct answer (from the list).
+         *
+         * @exception OutOfBounds -> If @p correctAnswerIndex is not in the range <b>[0, @ref ANSWERS_NUMBER)</b>.
+         *
+         * @exception OutOfBounds -> If @p answers.size() is not equal to @ref ANSWERS_NUMBER.
          */
         Question(const QString& question, int correctAnswerIndex, const QList<QString>& answers);
 
         /**
-         * @brief Returns the question text.
-         *
-         * @return Question text
+         * @brief Returns the question's text.
          */
         QString getQuestion() const;
 
         /**
          * @brief Returns an answer.
          *
-         * @param answerIndex The index of the answer to be returned.
+         * @param answerIndex -> The index of the answer to be returned.
          */
         QString getAnswer(int answerIndex) const;
 
@@ -60,7 +62,7 @@ class Question {
         /**
          * @brief Returns if an answer is correct or not.
          *
-         * @param answerIndex The index of the answer to be checked if it's correct.
+         * @param answerIndex -> The index of the answer to be checked if it's correct.
          */
         bool isCorrectAnswer(int answerIndex) const;
 };
