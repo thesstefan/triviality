@@ -46,9 +46,9 @@ void FileDatabase<Entry>::read() {
     try {
         entry.read(this->stream);
     } catch (const Exception& exception) {
-        QString errorMsg = exception.what();
+        QString errorMsg = QString("Could not read data : ") + QString(exception.what());
 
-        throw ReadFail("Could not read data : " + exception.what());
+        throw ReadFail(errorMsg.toStdString());
     }
 
     this->data.append(entry);
@@ -60,9 +60,9 @@ void FileDatabase<Entry>::readAll() {
         try {
             this->read();
         } catch (const Exception& exception) {
-            QString errorMsg = exception.what();
+            QString errorMsg = QString("Could not read data : ") + QString(exception.what());
 
-            throw ReadFail("Could not read data : " + exception.what());
+            throw ReadFail(errorMsg.toStdString());
         }
     }
 }
