@@ -10,6 +10,8 @@
 #include <QString>
 #include <QList>
 
+#include <QTextStream>
+
 #include "macros.h"
 
 /**
@@ -41,6 +43,11 @@ class Question {
         int correctAnswerIndex;
 
     public:
+        /**
+         * @brief Default constructor
+         */
+        Question();
+
         /**
          * @param question -> The text of the question.
          *
@@ -77,6 +84,23 @@ class Question {
          * @param answerIndex -> The index of the answer to be checked if it's correct.
          */
         bool isCorrectAnswer(int answerIndex) const;
+
+        /**
+         * @brief Reads the Question from a QTextStream.
+         *
+         * @param inputStream -> The stream to read the Question from.
+         *
+         * @exception ReadFail -> If the file is corrupt / it's not formatted correctly => 
+         * The Question can't be read properly.
+         */
+        void read(QTextStream *inputStream);
+
+        /**
+         * @brief Writes the Question to a QTextStream.
+         *
+         * @param outputStream -> The stream to write the Question to.
+         */
+        void write(QTextStream *output) const;
 };
 
 #endif
