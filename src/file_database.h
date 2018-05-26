@@ -6,7 +6,8 @@
 #include <QTextStream>
 #include <QFile>
 
-class FileDatabase : public Database {
+template <typename Entry>
+class FileDatabase : public Database<Entry> {
     private:
         QTextStream *stream;
 

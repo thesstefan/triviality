@@ -4,7 +4,12 @@
 #include "exceptions.h"
 #include "file_database.h"
 
-FileDatabase::FileDatabase(const QString& fileName) : Database() {
+#include "question.h"
+
+template class FileDatabase<Question>;
+
+template <typename Entry>
+FileDatabase<Entry>::FileDatabase(const QString& fileName) : Database<Entry>() {
     this->file = new QFile(fileName);
 
     if (!this->file->exists())
@@ -12,6 +17,7 @@ FileDatabase::FileDatabase(const QString& fileName) : Database() {
 
     if (file->open(QIODevice::ReadOnly) == false) {
         QString errorMsg = "Could not open file: " + this->file->errorString();
+
         throw OpenFail(errorMsg.toStdString());
     }
 
@@ -24,7 +30,8 @@ FileDatabase::FileDatabase(const QString& fileName) : Database() {
     }
 }
 
-FileDatabase::~FileDatabase() {
+template <typename Entry>
+FileDatabase<Entry>::~FileDatabase() {
     delete this->stream;
 
     this->file->close();
@@ -32,45 +39,20 @@ FileDatabase::~FileDatabase() {
     delete this->file;
 }
 
-void FileDatabase::read() {
-    QString question = this->stream->readLine();
+template <typename Entry>
+void FileDatabase<Entry>::read() {
+    Entry entry;
 
-    if (question == "")
-        throw EntryReadFail("Could not read entry.");
-
-    QString tempInput;
-
-    bool convertionStatus = true;
-
-    tempInput = this->stream->readLine();
-
-    int correctAnswerIndex = tempInput.trimmed().toInt(&convertionStatus);
-
-    if (correctAnswerIndex < 0 || correctAnswerIndex > 3)
-        throw EntryReadFail("Cold not read entry.");
-
-    QList<QString> answers;
-
-    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++) {
-        tempInput = this->stream->readLine();
-
-        if (tempInput == "")
-            throw EntryReadFail("Could not read entry.");
-
-        answers.append(tempInput);
-    }
-
-    this->stream->readLine();
-
-    Question entry(question, correctAnswerIndex, answers);
+    entry.read(this->stream);
 
     this->data.append(entry);
 }
 
-void FileDatabase::readAll() {
+template <typename Entry>
+void FileDatabase<Entry>::readAll() {
     while (this->stream->atEnd() == false) {
         try {
-            read();
+            this->read();
         } catch (const EntryReadFail& exception) {
             throw ReadFail("Could not read file : Entry reading fail.");
         }
