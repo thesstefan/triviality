@@ -43,7 +43,13 @@ template <typename Entry>
 void FileDatabase<Entry>::read() {
     Entry entry;
 
-    entry.read(this->stream);
+    try {
+        entry.read(this->stream);
+    } catch (const Exception& exception) {
+        QString errorMsg = exception.what();
+
+        throw ReadFail("Could not read data : " + exception.what());
+    }
 
     this->data.append(entry);
 }
@@ -53,8 +59,10 @@ void FileDatabase<Entry>::readAll() {
     while (this->stream->atEnd() == false) {
         try {
             this->read();
-        } catch (const EntryReadFail& exception) {
-            throw ReadFail("Could not read file : Entry reading fail.");
+        } catch (const Exception& exception) {
+            QString errorMsg = exception.what();
+
+            throw ReadFail("Could not read data : " + exception.what());
         }
     }
 }
