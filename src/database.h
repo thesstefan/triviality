@@ -15,23 +15,23 @@
 /**
  * @class Database
  *
- * @brief This class encapsulates and manages a collection of more Question instances.
+ * @brief This class encapsulates and manages a collection of more object instances.
  *
- * It is an abstract interface because we may need alternative input methods. 
- * (eg. different files formats / network source).
+ * @tparam Entry -> the type of object the Database manages.
+ *
+ * @note @b Entry must have the following methods implemented :
+ *      @li <b>write(QTextStream *stream)</b>, used by write(). (only if @b DEBUG is defined)
+ *      @li <b>read(SourceType *source)</b>, where the @b SourceType is defined by the type of Database used.
  *
  * The Database is also able to keep track of which entries have been used.
- *
- * @note We use the term "entry" because it's more suitable for a Database-like structure
- * which may be generalized at some point in the future. For now, an entry is just a Question.
  */
-
+template <typename Entry>
 class Database {
     protected:
         /**
-         * @brief The internal representation of the Question collection.
+         * @brief The internal representation of the entries collection.
          */
-        QList<Question> data;
+        QList<Entry> data;
 
         /**
          * @brief List containing the indexes of the used entries.
@@ -40,7 +40,6 @@ class Database {
 
         /**
          * @brief Reads the database from a source, source defined by the derived class.
-         * (e.g. The source of FileDatabase is a text file).
          *
          * The derived class must implement this method as different source types need
          * different read() implementations.
@@ -59,51 +58,51 @@ class Database {
         Database();
 
         /*
-         * @brief Default virtual constructor.
+         * @brief Default virtual destructor.
          */
         virtual ~Database();
 
 #ifdef DEBUG
         /**
-         * @brief Writes database to standard file. (.txt)
+         * @brief Writes the Database to text file. (.txt)
          *
-         * @param output -> The name of the file to write the Database to.
+         * @param outputFile -> The name of the file to write the Database to.
          *
-         * @note This is a debugging function. It's used only if DEBUG it's defined.
+         * @note This is a debugging function. It's used only if @b DEBUG it's defined.
          */
-        void write(const QString& output);
+        void write(const QString& outputFile);
 #endif
 
         /**
-         * @brief Returns a Question from the Database.
+         * @brief Returns an @b Entry from the Database.
          *
-         * @param questionIndex -> The index of the Question to be returned.
+         * @param entryId -> The id of the @b Entry to be returned.
          *
-         * @exception OutOfBounds -> If @p questionIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p entryId is not in the range <b>[0, size())</b>.
          */
-        Question getQuestion(int questionIndex) const;
+        Entry getEntry(int entryId) const;
 
         /**
-         * @brief Marks an entry as used.
+         * @brief Marks an @b Entry as used.
          *
-         * @param entryIndex -> The index of the entry to be returned.
+         * @param entryId -> The id of the @b Entry to be returned.
          *
-         * @exception OutOfBounds -> If @p entryIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p entryId is not in the range <b>[0, size())</b>.
          */
-        void markEntryUsed(int entryIndex);
+        void markEntryUsed(int entryId);
 
 
         /**
-         * @brief Checks if an entry is used.
+         * @brief Checks if an @b Entry is used.
          *
-         * @param entryIndex -> The index of the entry to be checked if it's used.
+         * @param entryId -> The id of the @b Entry to be checked if it's used.
          *
-         * @exception OutOfBounds -> If @p entryIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p entryId is not in the range <b>[0, size())</b>.
          */
-        bool isEntryUsed(int entryIndex) const;
+        bool isEntryUsed(int entryId) const;
 
         /**
-         * @brief Returns Database's size.
+         * @brief Returns the number of entries the Database contains.
          */
         int size() const;
 };

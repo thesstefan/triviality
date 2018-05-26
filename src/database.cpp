@@ -4,28 +4,48 @@
 #include "database.h"
 #include "exceptions.h"
 
-Database::Database() {}
+#include "question.h"
 
-Database::~Database() {}
+template class Database<Question>;
 
-Question Database::getQuestion(int questionIndex) const {
-    return this->data.at(questionIndex);
+template <typename Entry>
+Database<Entry>::Database() {}
+
+template <typename Entry>
+Database<Entry>::~Database() {}
+
+template <typename Entry>
+Entry Database<Entry>::getEntry(int entryId) const {
+    if (entryId > this->size() || entryId < 0)
+        throw OutOfBounds("Database::getEntry() -> entryId is out of bounds.");
+
+    return this->data.at(entryId);
 }
 
-void Database::markEntryUsed(int entryIndex) {
-    this->entriesUsed.append(entryIndex);
+template <typename Entry>
+void Database<Entry>::markEntryUsed(int entryId) {
+    if (entryId > this->size() || entryId < 0)
+        throw OutOfBounds("Database::markEntryUsed() -> entryId is out of bounds.");
+
+    this->entriesUsed.append(entryId);
 }
 
-bool Database::isEntryUsed(int entryIndex) const {
-    return this->entriesUsed.contains(entryIndex);
+template <typename Entry>
+bool Database<Entry>::isEntryUsed(int entryId) const {
+    if (entryId > this->size() || entryId < 0)
+        throw OutOfBounds("Database::markEntryUsed() -> entryId is out of bounds.");
+
+    return this->entriesUsed.contains(entryId);
 }
 
-int Database::size() const {
+template <typename Entry>
+int Database<Entry>::size() const {
     return this->data.size();
 }
 
 #ifdef DEBUG
-void Database::write(const QString& outputFile) {
+template <typename Entry>
+void Database<Entry>::write(const QString& outputFile) {
     QFile file(outputFile);
 
     if (file.open(QIODevice::WriteOnly) == false) {
@@ -38,17 +58,7 @@ void Database::write(const QString& outputFile) {
 
     out << "Database Size : " << this->size() << " Questions" << endl << endl;
 
-    for (int entryIndex = 0; entryIndex < this->size(); entryIndex++) {
-        Question question = this->data.at(entryIndex);
-
-        out << question.getQuestion() << endl;
-
-        out << "Correct Answers : " << question.getCorrectAnswer() << endl;
-
-        for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
-            out << question.getAnswer(answerIndex) << endl;
-
-        out << endl;
-    }
+    for (int entryId = 0; entryId < this->size(); entryId++)
+        this->data.at(entryId).write(&out);
 }
 #endif
