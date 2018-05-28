@@ -1,44 +1,24 @@
-#include <QPushButton>
-
 #include "push_button.h"
+
+const QColor PushButton::DEFAULT = QColor(16, 16, 16);
+const QColor PushButton::CORRECT = QColor(20, 180, 50);
+const QColor PushButton::WRONG = QColor(200, 20, 20);
 
 PushButton::PushButton(QWidget *parent) : QPushButton(parent) {
     this->setFlat(true);
     this->setFixedSize(500, 100);
 
-    this->setStyleSheet(
-            "background-color: rgb(16, 16, 16);"
-            "border: 1px solid #191919;"
-            "color: white;"
-            "font-size: 35px;"
-            );
+    this->colorize(this->DEFAULT);
 }
 
-void PushButton::colorize(bool isCorrect) {
-    if (isCorrect)
-        // Colorize the button Green if the answer is correct.
-        this->setStyleSheet(
-                "background-color: rgb(20, 180, 50);"
-                "border: 1px solid #191919;"
-                "color: white;"
-                "font-size: 35px;"
-                );
-    else
-        // Colorize the button Red if the answer is incorrect.
-        this->setStyleSheet(
-                "background-color: rgb(200, 20, 20);"
-                "border: 1px solid #191919;"
-                "color: white;"
-                "font-size: 35px;"
-                );
-}
+void PushButton::colorize(const QColor& color) {
+    QString style = "background: rgb(%1, %2, %3);";
 
-void PushButton::clearColor() {
-    this->setStyleSheet(
-            "background-color: rgb(16, 16, 16);"
-            "border: 1px solid #191919;"
-            "color: white;"
-            "font-size: 35px;"
-            );
-}
+    style = style.arg(color.red()).arg(color.green()).arg(color.blue());
+        
+    style += "border: 1px solid #191919;";
+    style += "color: white;";
+    style += "font-size: 35px;";
 
+    this->setStyleSheet(style);
+}
