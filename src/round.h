@@ -34,3 +34,5 @@ class Round : public QObject {
         void next();
         void windowNeedsUpdate();
 };
+
+#endif
