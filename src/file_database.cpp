@@ -71,7 +71,7 @@ void FileDatabase::readAll() {
     while (this->stream->atEnd() == false) {
         try {
             this->read();
-        } catch (const EntryReadFail& exception) {
+        } catch (const Exception& exception) {
             QString errorMsg = QString("Could not read data : ") + QString(exception.what());
 
             throw ReadFail(errorMsg.toStdString());
