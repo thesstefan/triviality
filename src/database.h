@@ -77,6 +77,18 @@ class Database {
          * @exception OutOfBounds -> If @p questionId is not in the range <b>[0, size())</b>.
          */
         Question getQuestion(int questionId) const;
+        
+        /**
+         * @brief Adds a Question to the Database.
+         *
+         * @param question -> The Question to be added.
+         *
+         * @returns The id of the Question in the Database.
+         *
+         * @note If the Database already contains a Question with the contents equal to the one
+         * of @p question, @p question is still added, so be careful regarding how you use this method.
+         */
+        int addQuestion(const Question& question);
 
         /**
          * @brief Marks an Question as used. (Used in Game to avoid using the same Question multiple times)

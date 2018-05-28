@@ -15,6 +15,12 @@ Question Database::getQuestion(int questionId) const {
     return this->data.at(questionId);
 }
 
+int Database::addQuestion(const Question& question) {
+    this->data.append(question);
+
+    return this->size() - 1;
+}
+
 void Database::markQuestionUsed(int questionId) {
     if (questionId > this->size() || questionId < 0)
         throw OutOfBounds("Database::markQuestionUsed() -> questionId is out of bounds.");
