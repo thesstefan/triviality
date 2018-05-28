@@ -1,34 +1,61 @@
-#ifndef ROUND_H
-#define ROUND_H
+#include "round.h"
 
-#include <QObject>
+Round::Round(const Question& question, QObject *parent = 0) : QObject(parent) {
+    this->question = question;
 
-#include "question.h"
-#include "round_widget.h"
+    this->score = 0;
 
-class Round : public QObject {
-    Q_OBJECT
+    this->widget = new RoundWidget();
+}
 
-    private:
-        Question question;
-        RoundWidget *widget;
+void Round::sync() {
+    this->widget->updateLabel(this->question.getQuestion());
 
-        int score;
+    for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
+        this->widget->updateButton(this->question.getAnswer(buttonIndex), buttonIndex);
 
-        void sync();
+    this->widget->connectButtons(this, SLOT(buttonClicked()));
+}
 
-    public:
-        Round(const Question& question, QObject *parent = 0);
+void Round::start() {
+    this->sync();
 
-        void start();
+    emit windowNeedsUpdate();
+}
 
-        int getScore()
+int Round::getScore() const {
+    return this->score;
+}
 
-    public slots:
-        void buttonClicked();
-        void endRound();
+void Round::buttonClicked() {
+    QObject *sender = QObject::sender();
 
-    signals:
-        void next();
-        void windowNeedsUpdate();
-};
+    PushButton *clickedButton = qobject_cast<PushButton *>(sender);
+
+    bool isCorrect = true;
+
+    if (clickedButton->text() == this->question->getCorrectAnswer()) {
+        clickedButton->colorize(PushButton::CORRECT);
+
+        this->score += 10;
+    } else 
+        clickedButton->colorize(PushButton::WRONG);
+
+    // Disable buttons to avoid multiple endRound() signals emitted.
+    this->widget->disableButtons();
+
+    // Wait 500ms before ending the Round.
+    QTimer *timer = new QTimer(this);
+
+    timer->setSingleShot(true);
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(endRound()));
+
+    timer->start(500);
+}
+
+void Round::endRound() {
+    this->widget->deleteLater();
+
+    emit next();
+}

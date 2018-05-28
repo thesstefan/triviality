@@ -1,61 +1,36 @@
-#include "round.h"
+#ifndef ROUND_H
+#define ROUND_H
 
-Round::Round(const Question& question, QObject *parent = 0) : QObject(parent) {
-    this->question = question;
+#include <QObject>
 
-    this->score = 0;
+#include "question.h"
+#include "round_widget.h"
 
-    this->widget = new RoundWidget();
-}
+class Round : public QObject {
+    Q_OBJECT
 
-void Round::sync() {
-    this->widget->updateLabel(this->question.getQuestion());
+    private:
+        Question question;
+        RoundWidget *widget;
 
-    for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
-        this->widget->updateButton(this->question.getAnswer(buttonIndex), buttonIndex);
+        int score;
 
-    this->widget->connectButtons(this, SLOT(buttonClicked()));
-}
+        void sync();
 
-void Round::start() {
-    this->sync();
+    public:
+        Round(const Question& question, QObject *parent = 0);
 
-    emit windowNeedsUpdate();
-}
+        void start();
 
-int Round::getScore() const {
-    return this->score;
-}
+        void control(MainWindow *window);
 
-void Round::buttonClicked() {
-    QObject *sender = QObject::sender();
+        int getScore()
 
-    PushButton *clickedButton = qobject_cast<PushButton *>(sender);
+    public slots:
+        void buttonClicked();
+        void endRound();
 
-    bool isCorrect = true;
-
-    if (clickedButton->text() == this->question->getCorrectAnswer()) {
-        clickedButton->colorize(PushButton::CORRECT);
-
-        this->score += 10;
-    } else 
-        clickedButton->colorize(PushButton::WRONG);
-
-    // Disable buttons to avoid multiple endRound() signals emitted.
-    this->widget->disableButtons();
-
-    // Wait 500ms before ending the Round.
-    QTimer *timer = new QTimer(this);
-
-    timer->setSingleShot(true);
-
-    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(endRound()));
-
-    timer->start(500);
-}
-
-void Round::endRound() {
-    this->widget->deleteLater();
-
-    emit next();
-}
+    signals:
+        void next();
+        void windowNeedsUpdate();
+};
