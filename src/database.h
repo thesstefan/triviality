@@ -17,13 +17,9 @@
  *
  * @brief This class encapsulates and manages a collection of more Question instances.
  *
- * It is an abstract interface because we may need alternative input methods. 
- * (eg. different files formats / network source).
- *
  * The Database is also able to keep track of which entries have been used.
  *
- * @note We use the term "entry" because it's more suitable for a Database-like structure
- * which may be generalized at some point in the future. For now, an entry is just a Question.
+ * @note Derived classes are inteded to be used for different input sources. (eg. NetworkDatabase, FileDatabase)
  */
 
 class Database {
@@ -39,8 +35,7 @@ class Database {
         QList<int> entriesUsed;
 
         /**
-         * @brief Reads the database from a source, source defined by the derived class.
-         * (e.g. The source of FileDatabase is a text file).
+         * @brief Reads the Database.
          *
          * The derived class must implement this method as different source types need
          * different read() implementations.
@@ -65,7 +60,7 @@ class Database {
 
 #ifdef DEBUG
         /**
-         * @brief Writes database to standard file. (.txt)
+         * @brief Writes the Database to text file.
          *
          * @param output -> The name of the file to write the Database to.
          *
@@ -77,30 +72,37 @@ class Database {
         /**
          * @brief Returns a Question from the Database.
          *
-         * @param questionIndex -> The index of the Question to be returned.
+         * @param questionId -> The id of the Question to be returned.
          *
-         * @exception OutOfBounds -> If @p questionIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p questionId is not in the range <b>[0, size())</b>.
          */
-        Question getQuestion(int questionIndex) const;
+        Question getQuestion(int questionId) const;
 
         /**
-         * @brief Marks an entry as used.
+         * @brief Marks an Question as used. (Used in Game to avoid using the same Question multiple times)
          *
-         * @param entryIndex -> The index of the entry to be returned.
+         * @param questionId -> The id of the Question to be returned.
          *
-         * @exception OutOfBounds -> If @p entryIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p questionId is not in the range <b>[0, size())</b>.
          */
-        void markEntryUsed(int entryIndex);
+        void markQuestionUsed(int questionId);
 
 
         /**
-         * @brief Checks if an entry is used.
+         * @brief Checks if a Question is used. (If it was previously marked by markQuestionUsed)
          *
-         * @param entryIndex -> The index of the entry to be checked if it's used.
+         * @param questionId -> The id of the Question to be checked if it's used.
          *
-         * @exception OutOfBounds -> If @p entryIndex is not in the range <b>[0, size())</b>.
+         * @exception OutOfBounds -> If @p questionId is not in the range <b>[0, size())</b>.
          */
-        bool isEntryUsed(int entryIndex) const;
+        bool isQuestionUsed(int questionId) const;
+
+        /**
+         * @brief Resets the used entries tracker.
+         *
+         * Every Question will be "marked" as not used.
+         */
+        void resetUsageTracker();
 
         /**
          * @brief Returns Database's size.
