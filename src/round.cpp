@@ -23,6 +23,10 @@ void Round::start() {
     emit windowNeedsUpdate();
 }
 
+void Round::focusWidget(MainWindow *window) {
+    this->window->setCentralWidget(this->widget);
+}
+
 int Round::getScore() const {
     return this->score;
 }

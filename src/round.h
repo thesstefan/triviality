@@ -22,7 +22,7 @@ class Round : public QObject {
 
         void start();
 
-        void control(MainWindow *window);
+        void focusWidget(MainWindow *window);
 
         int getScore()
 
