@@ -22,14 +22,6 @@ void Game::updateWindow() {
     this->currentRound->focusWidget(this->window);
 }
 
-void Game::showScore() {
-    ScoreWidget *scoreWidget = new ScoreWidget(this->score);
-
-    QObject::connect(scoreWidget->getCloseButton(), SIGNAL(clicked()), this->window, SLOT(close()));
-
-    this->window->setCentralWidget(scoreWidget);
-}
-
 void Game::start() {
     this->startNewRound();
 }
@@ -67,5 +59,5 @@ void Game::nextRound() {
 
         this->startNewRound();
     } else
-        showScore();
+        emit gameEnded(this->score);
 }
