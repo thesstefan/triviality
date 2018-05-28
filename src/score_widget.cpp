@@ -41,10 +41,10 @@ ScoreWidget::ScoreWidget(int score, QWidget *parent) : QWidget(parent) {
     this->setLayout(layout);
 }
 
-void connectCloseButton(QObject *receiver, const char *slot) {
+void ScoreWidget::connectCloseButton(QObject *receiver, const char *slot) {
     QObject::connect(this->closeButton, SIGNAL(clicked()), receiver, slot);
 }
 
-void connectBackButton(QObject *receiver, const char *slot) {
+void ScoreWidget::connectBackButton(QObject *receiver, const char *slot) {
     QObject::connect(this->backButton, SIGNAL(clicked()), receiver, slot);
 }
