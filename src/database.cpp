@@ -8,16 +8,29 @@ Database::Database() {}
 
 Database::~Database() {}
 
-Question Database::getQuestion(int questionIndex) const {
-    return this->data.at(questionIndex);
+Question Database::getQuestion(int questionId) const {
+    if (questionId > this->size() || questionId < 0)
+        throw OutOfBounds("Database::getQuestion() -> questionId is out of bounds.");
+
+    return this->data.at(questionId);
 }
 
-void Database::markEntryUsed(int entryIndex) {
-    this->entriesUsed.append(entryIndex);
+void Database::markQuestionUsed(int questionId) {
+    if (questionId > this->size() || questionId < 0)
+        throw OutOfBounds("Database::markQuestionUsed() -> questionId is out of bounds.");
+
+    this->entriesUsed.append(questionId);
 }
 
-bool Database::isEntryUsed(int entryIndex) const {
-    return this->entriesUsed.contains(entryIndex);
+bool Database::isQuestionUsed(int questionId) const {
+    if (questionId > this->size() || questionId < 0)
+        throw OutOfBounds("Database::isQuestionUsed -> questionId is out of bounds.");
+
+    return this->entriesUsed.contains(questionId);
+}
+
+void Database::resetUsageTracker() {
+    this->entriesUsed.clear();
 }
 
 int Database::size() const {
