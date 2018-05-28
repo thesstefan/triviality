@@ -9,8 +9,6 @@
 #include "round.h"
 #include "main_window.h"
 
-#define ROUNDS_NUMBER 7
-
 class Game : public QObject {
     Q_OBJECT
 
