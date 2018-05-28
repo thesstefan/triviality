@@ -36,7 +36,7 @@ void FileDatabase::read() {
     QString question = this->stream->readLine();
 
     if (question == "")
-        throw EntryReadFail("Could not read entry.");
+        throw ReadFail("Could not read Question.");
 
     QString tempInput;
 
@@ -47,7 +47,7 @@ void FileDatabase::read() {
     int correctAnswerIndex = tempInput.trimmed().toInt(&convertionStatus);
 
     if (correctAnswerIndex < 0 || correctAnswerIndex > 3)
-        throw EntryReadFail("Cold not read entry.");
+        throw ReadFail("Cold not read Question.");
 
     QList<QString> answers;
 
@@ -55,7 +55,7 @@ void FileDatabase::read() {
         tempInput = this->stream->readLine();
 
         if (tempInput == "")
-            throw EntryReadFail("Could not read entry.");
+            throw ReadFail("Could not read Question.");
 
         answers.append(tempInput);
     }
@@ -70,9 +70,11 @@ void FileDatabase::read() {
 void FileDatabase::readAll() {
     while (this->stream->atEnd() == false) {
         try {
-            read();
+            this->read();
         } catch (const EntryReadFail& exception) {
-            throw ReadFail("Could not read file : Entry reading fail.");
+            QString errorMsg = QString("Could not read data : ") + QString(exception.what());
+
+            throw ReadFail(errorMsg.toStdString());
         }
     }
 }
