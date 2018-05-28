@@ -42,6 +42,15 @@ class Question {
 
     public:
         /**
+         * @brief Default constructor.
+         *
+         * The question text and the answers are initialized to "EMPTY".
+         *
+         * The correct answer is the first one.
+         */
+        Question();
+
+        /**
          * @param question -> The text of the question.
          *
          * @param answers -> List of answers.
