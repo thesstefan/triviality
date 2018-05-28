@@ -1,3 +1,9 @@
+/**
+ * @file menu_widget.h
+ *
+ * This file provides the interface of a customized QWidget, used to display the Main Menu in Quiz.
+ */
+
 #ifndef MENUWIDGET_H
 #define MENUWIDGET_H
 
@@ -5,18 +11,54 @@
 
 #include "push_button.h"
 
-class MainWidget : public QWidget {
+/**
+ * @class MenuWidget
+ *
+ * @brief The class is used to display the Main Menu in Quiz.
+ *
+ * It contains two buttons which allow the user to :
+ *      @li Start the Game.
+ *      @li Exit the App.
+ */
+class MenuWidget : public QWidget {
     Q_OBJECT
 
-    public:
-        MainWidget(QWidget *parent = 0);
-
-        const PushButton *getStartButton() const;
-        const PushButton *getExitButton() const;
-
     private:
+        /**
+         * @brief The PushButton used to start the Game.
+         */
         PushButton *startButton;
+
+        /**
+         * @brief The PushButton used to exit the App.
+         */
         PushButton *exitButton;
+
+    public:
+        /**
+         * @brief Constructs the MenuWidget.
+         *
+         * @param parent -> The QWidget parent.
+         */
+        MenuWidget(QWidget *parent = 0);
+
+        /**
+         * @brief Connects the start PushButton to a @b slot.
+         *
+         * @param receiver -> The QObject owner of the @b slot.
+         *
+         * @param slot -> The @b slot to connect with.
+         */
+        void connectStartButton(QObject *receiver, const char *slot);
+
+        /**
+         * @brief Connects the exit PushButton to a @b slot.
+         *
+         * @param receiver -> The QObject owner of the @b slot.
+         *
+         * @param slot -> The @b slot to connect with.
+         */
+        void connectExitButton(QObject *receiver, const char *slot);
 };
 
 #endif

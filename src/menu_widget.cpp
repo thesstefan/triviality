@@ -24,10 +24,10 @@ MenuWidget::MenuWidget(QWidget *parent) : QWidget(parent) {
     this->setLayout(buttonLayout);
 }
 
-const PushButton *MenuWidget::getStartButton() {
-    return this->startButton;
+void MenuWidget::connectStartButton(QObject *receiver, const char *slot) {
+    QObject::connect(this->startButton, SIGNAL(clicked()), receiver, slot);
 }
 
-const PushButton *MenuWidget::getExitButton() {
-    return this->exitButton;
+void MenuWidget::connectExitButton(QObject *receiver, const char *slot) {
+    QObject::connect(this->exitButton, SIGNAL(clicked()), receiver, slot);
 }
