@@ -11,6 +11,7 @@
 #include <QLabel>
 
 #include "push_button.h"
+#include "macros.h"
 
 /**
  * @class RoundWidget

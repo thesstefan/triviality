@@ -5,6 +5,7 @@
 
 #include "question.h"
 #include "round_widget.h"
+#include "main_window.h"
 
 class Round : public QObject {
     Q_OBJECT
@@ -24,7 +25,7 @@ class Round : public QObject {
 
         void focusWidget(MainWindow *window);
 
-        int getScore()
+        int getScore() const;
 
     public slots:
         void buttonClicked();

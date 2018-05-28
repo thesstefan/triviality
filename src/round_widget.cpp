@@ -49,7 +49,7 @@ void RoundWidget::disableButtons() {
         this->answerButton[buttonIndex]->setEnabled(false);
 }
 
-void RoundWidget::connectButtons(QObject *sender, const char *slot) {
+void RoundWidget::connectButtons(QObject *receiver, const char *slot) {
     for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
         QObject::connect(this->answerButton[buttonIndex], SIGNAL(clicked()), receiver, slot);
 }

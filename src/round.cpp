@@ -1,6 +1,8 @@
 #include "round.h"
 
-Round::Round(const Question& question, QObject *parent = 0) : QObject(parent) {
+#include <QTimer>
+
+Round::Round(const Question& question, QObject *parent) : QObject(parent) {
     this->question = question;
 
     this->score = 0;
@@ -24,7 +26,7 @@ void Round::start() {
 }
 
 void Round::focusWidget(MainWindow *window) {
-    this->window->setCentralWidget(this->widget);
+    window->setCentralWidget(this->widget);
 }
 
 int Round::getScore() const {
@@ -36,9 +38,7 @@ void Round::buttonClicked() {
 
     PushButton *clickedButton = qobject_cast<PushButton *>(sender);
 
-    bool isCorrect = true;
-
-    if (clickedButton->text() == this->question->getCorrectAnswer()) {
+    if (clickedButton->text() == this->question.getCorrectAnswer()) {
         clickedButton->colorize(PushButton::CORRECT);
 
         this->score += 10;

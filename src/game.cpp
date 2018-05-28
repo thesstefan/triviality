@@ -19,7 +19,7 @@ Game::Game(Database *data, MainWindow *window) {
 }
 
 void Game::updateWindow() {
-    this->window->setCentralWidget(this->currentRound->getWidget());
+    this->currentRound->focusWidget(this->window);
 }
 
 void Game::showScore() {
@@ -39,14 +39,14 @@ void Game::deleteRound() {
 }
 
 void Game::startNewRound() {
-    int questionIndex = this->generator->bounded(this->data->size());
+    int questionId = this->generator->bounded(this->data->size());
 
-    while (this->data->isEntryUsed(questionIndex))
-        questionIndex = this->generator->bounded(this->data->size());
+    while (this->data->isQuestionUsed(questionId))
+        questionId = this->generator->bounded(this->data->size());
 
-    Question question = this->data->getQuestion(questionIndex);
+    Question question = this->data->getQuestion(questionId);
 
-    this->data->markEntryUsed(questionIndex);
+    this->data->markQuestionUsed(questionId);
 
     this->currentRound = new Round(question);
 

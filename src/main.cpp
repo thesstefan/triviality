@@ -1,27 +1,22 @@
-#include <QDebug>
-#include <iostream>
+#include <QApplication>
 
-#include "exceptions.h"
+#include <QWidget>
+
+#include "game.h"
 #include "file_database.h"
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        std::cout << "Usage: ./quiz databaseFileName" << std::endl;
+    QApplication app(argc, argv);
 
-        return -1;
-    }
+    FileDatabase *data = new FileDatabase(":/data.txt");
 
-    try {
-        Database *database;
+    MainWindow *window = new MainWindow();
 
-        database = new FileDatabase(argv[1]);
+    Game *game = new Game(data, window);
 
-        database->write("output.txt");
+    game->start();
 
-        delete database;
-    } catch (const Exception& exception) {
-        std::cerr << exception.what() << std::endl;
-    }
+    window->show();
 
-    return 0;
+    return app.exec();
 }
