@@ -44,11 +44,12 @@ void RoundWidget::updateButton(const QString& text, int index) {
     this->answerButton[index]->setText(text);
 }
 
-const PushButton *RoundWidget::getButton(int index) const {
-    return this->answerButton[index];
-}
-
 void RoundWidget::disableButtons() {
     for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
         this->answerButton[buttonIndex]->setEnabled(false);
+}
+
+void RoundWidget::connectButtons(QObject *sender, const char *slot) {
+    for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
+        QObject::connect(this->answerButton[buttonIndex], SIGNAL(clicked()), receiver, slot);
 }
