@@ -6,8 +6,6 @@
 
 #include "push_button.h"
 
-#define ANSWERS_NUMBER 4
-
 class RoundWidget : public QWidget {
     Q_OBJECT
 
@@ -22,9 +20,9 @@ class RoundWidget : public QWidget {
         void updateLabel(const QString& text);
         void updateButton(const QString& text, int index);
     
-        const PushButton *getButton(int index) const;
-
         void disableButtons();
+
+        void connectButtons(QObject *receiver, const char* slot);
 };
 
 #endif
