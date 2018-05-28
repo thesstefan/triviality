@@ -9,8 +9,6 @@
 
 #include <QMainWindow>
 
-#include "MenuWidget.h"
-
 /**
  * @class MainWindow
  *
