@@ -67,7 +67,7 @@ class ScoreWidget : public QWidget {
          *
          * @param slot -> The @b slot to connect with.
          */
-        void connectExitButton(QObject *receiver, const char *slot);
+        void connectBackButton(QObject *receiver, const char *slot);
 };
 
 #endif 
