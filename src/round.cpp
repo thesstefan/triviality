@@ -2,10 +2,13 @@
 
 #include <QTimer>
 
+RoundWidget *Round::widget = nullptr;
+
 Round::Round(const Question& question, QObject *parent) : 
     QObject(parent), question(question), score(0) {
-
-    this->widget = new RoundWidget();
+    
+    if (this->widget == nullptr)
+        this->widget = new RoundWidget();
 }
 
 void Round::sync() {
@@ -57,7 +60,5 @@ void Round::buttonClicked() {
 }
 
 void Round::endRound() {
-    this->widget->deleteLater();
-
     emit next();
 }

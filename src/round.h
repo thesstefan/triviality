@@ -38,7 +38,7 @@ class Round : public QObject {
         /**
          * @brief The RoundWidget managed by Round.
          */
-        RoundWidget *widget;
+        static RoundWidget *widget;
 
         /**
          * @brief The score achieved in the Round.
