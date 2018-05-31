@@ -1,3 +1,6 @@
+#ifndef MACROS_H
+#define MACROS_H
+
 /**
  * @file macros.h
  *
@@ -7,9 +10,11 @@
 /**
  * @brief This constant defines the number of answers contained by a Question.
  */
-#define ANSWERS_NUMBER 4
+const int ANSWERS_NUMBER = 4;
 
 /**
  * @brief This constant defines the number of Round instances used in a Game session.
  */
-#define ROUNDS_NUMBER 7
+const int ROUNDS_NUMBER = 7;
+
+#endif
