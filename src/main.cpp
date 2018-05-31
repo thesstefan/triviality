@@ -5,14 +5,22 @@
 #include "quiz.h"
 #include "file_database.h"
 
+#include <iostream>
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
-    FileDatabase *database = new FileDatabase(":/data.txt");
+    FileDatabase database(":/data.txt");
 
-    Quiz *quiz = new Quiz(database);
+    Quiz quiz(&database);
 
-    quiz->run();
+    QObject::connect(&quiz, SIGNAL(kill()), &app, SLOT(quit()));
 
-    return app.exec();
+    quiz.run();
+
+    int ret = app.exec();
+
+    std::cout << "SUCCESS" << std::endl;
+
+    return ret;
 }
