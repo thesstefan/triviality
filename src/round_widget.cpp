@@ -42,6 +42,8 @@ void RoundWidget::updateLabel(const QString& text) {
 
 void RoundWidget::updateButton(const QString& text, int index) {
     this->answerButton[index]->setText(text);
+
+    this->answerButton[index]->colorize(PushButton::DEFAULT);
 }
 
 void RoundWidget::enableButtons(bool toEnable) {
