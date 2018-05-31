@@ -66,9 +66,11 @@ class RoundWidget : public QWidget {
         void updateButton(const QString& text, int index);
     
         /**
-         * @brief Disables all the PushButton s.
+         * @brief Disables \ enables all the PushButton s.
+         *
+         * @param toEnable -> If true, enable the buttons, disable them otherwise.
          */
-        void disableButtons();
+        void enableButtons(bool toEnable);
 
         /**
          * @brief Connects all the ANSWERS_NUMBER PushButton s to a @b slot.

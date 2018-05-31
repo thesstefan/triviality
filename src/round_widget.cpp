@@ -44,9 +44,9 @@ void RoundWidget::updateButton(const QString& text, int index) {
     this->answerButton[index]->setText(text);
 }
 
-void RoundWidget::disableButtons() {
+void RoundWidget::enableButtons(bool toEnable) {
     for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
-        this->answerButton[buttonIndex]->setEnabled(false);
+        this->answerButton[buttonIndex]->setEnabled(toEnable);
 }
 
 void RoundWidget::connectButtons(QObject *receiver, const char *slot) {
