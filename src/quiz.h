@@ -12,7 +12,7 @@
 #include "game.h"
 #include "main_window.h"
 #include "menu_widget.h"
-#include "score_widget.h"
+#include "score_controller.h"
 
 /**
  * @class Quiz
@@ -58,11 +58,16 @@ class Quiz : public QObject {
         Game *currentGame;
 
         /**
-         * @brief The ScoreWidget used to display the score.
+         * @brief The ScoreContoller used to manage the score display.
          */
-        ScoreWidget *scoreWidget;
+        ScoreController *scoreController;
 
     public:
+        /**
+         * @brief Destructs the Quiz.
+         */
+        ~Quiz();
+
         /**
          * @brief Constructs the Quiz, assigning it a Database.
          *
@@ -104,7 +109,10 @@ class Quiz : public QObject {
          *
          * This is called when the quit PushButton is pressed in MenuWidget or ScoreWidget.
          */
-        void close();
+        void closeApp();
+
+    signals:
+        void kill();
 };
 
 #endif

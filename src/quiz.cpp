@@ -11,7 +11,7 @@ Quiz::Quiz(Database *data) {
 
     this->menuWidget->connectStartButton(this, SLOT(startGame()));
 
-    this->menuWidget->connectExitButton(this, SLOT(close()));
+    this->menuWidget->connectExitButton(this, SLOT(closeApp()));
 }
 
 void Quiz::run() {
@@ -19,20 +19,23 @@ void Quiz::run() {
 }
 
 void Quiz::showScore(int score) {
-    delete this->currentGame;
+    this->currentGame->deleteLater();
     
-    this->scoreWidget = new ScoreWidget(score);
+    this->scoreController = new ScoreController(score, this);
 
-    this->window->setCentralWidget(this->scoreWidget);
+    this->scoreController->focus(this->window);
 
-    this->scoreWidget->connectBackButton(this, SLOT(back()));
-    this->scoreWidget->connectCloseButton(this, SLOT(close()));
+    this->scoreController->connectButtons(this, SLOT(back()), SLOT(closeApp()));
 }
 
 void Quiz::back() {
+    this->scoreController->stopFocus(this->window);
+
+    this->scoreController->deleteLater();
+
     this->window->setCentralWidget(this->menuWidget);
 
-    //this->scoreWidget->deleteLater();
+    this->menuWidget->show();
 }
 
 void Quiz::startGame() {
@@ -43,13 +46,16 @@ void Quiz::startGame() {
     this->currentGame->start();
 }
 
-void Quiz::close() {
+void Quiz::closeApp() {
     this->window->hide();
 
-    this->menuWidget->deleteLater();
-    this->window->deleteLater();
-    this->scoreWidget->deleteLater();
-    this->currentGame->deleteLater();
+    emit kill();
+}
 
-    this->close();
+Quiz::~Quiz() {
+    /*
+    this->menuWidget->deleteLater();
+    */
+
+    this->window->deleteLater();
 }
