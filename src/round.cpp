@@ -17,6 +17,8 @@ void Round::sync() {
     for (int buttonIndex = 0; buttonIndex < ANSWERS_NUMBER; buttonIndex++)
         this->widget->updateButton(this->question.getAnswer(buttonIndex), buttonIndex);
 
+    this->widget->enableButtons(true);
+
     this->widget->connectButtons(this, SLOT(buttonClicked()));
 }
 
@@ -47,7 +49,7 @@ void Round::buttonClicked() {
         clickedButton->colorize(PushButton::WRONG);
 
     // Disable buttons to avoid multiple endRound() signals emitted.
-    this->widget->disableButtons();
+    this->widget->enableButtons(false);
 
     // Wait 500ms before ending the Round.
     QTimer *timer = new QTimer(this);
