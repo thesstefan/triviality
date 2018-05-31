@@ -44,6 +44,14 @@ class ScoreController : public QObject {
         ScoreController(int score, QObject *parent = 0);
 
         /**
+         * @brief Destructs the ScoreController.
+         *
+         * This also destroys the internal ScoreWidget. If focus() was used, 
+         * stopFocus() is necessary before destructing.
+         */
+        ~ScoreController();
+
+        /**
          * @brief Sets ScoreWidget as the central widget on MainWindow.
          *
          * @param window -> The MainWindow to be used.
