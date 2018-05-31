@@ -59,6 +59,8 @@ class RoundWidget : public QWidget {
         /**
          * @brief Updates the text of a PushButton.
          *
+         * It also colorizes the PushButton to PushButton::DEFAULT.
+         *
          * @param text -> The new text.
          *
          * @param index -> The index of the PushButton to be updated.
