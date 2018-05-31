@@ -2,10 +2,8 @@
 
 #include <QTimer>
 
-Round::Round(const Question& question, QObject *parent) : QObject(parent) {
-    this->question = question;
-
-    this->score = 0;
+Round::Round(const Question& question, QObject *parent) : 
+    QObject(parent), question(question), score(0) {
 
     this->widget = new RoundWidget();
 }

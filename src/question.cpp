@@ -2,15 +2,6 @@
 
 #include "exceptions.h"
 
-Question::Question() {
-    this->question = "EMPTY";
-
-    for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
-        this->answer[answerIndex] = "EMPTY";
-
-    this->correctAnswerIndex = 0;
-}
-
 Question::Question(const QString& question, int correctAnswerIndex, const QList<QString>& answers) {
     this->question = question;
 
