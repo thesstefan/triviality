@@ -41,7 +41,7 @@ void Round::buttonClicked() {
     if (clickedButton->text() == this->question.getCorrectAnswer()) {
         clickedButton->colorize(PushButton::CORRECT);
 
-        this->score += 10;
+        this->score += ROUND_SCORE;
     } else 
         clickedButton->colorize(PushButton::WRONG);
 

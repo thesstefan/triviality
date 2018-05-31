@@ -17,4 +17,9 @@ const int ANSWERS_NUMBER = 4;
  */
 const int ROUNDS_NUMBER = 7;
 
+/**
+ * @brief This constant defines the score increase in Game after the Round was answered correctly.
+ */
+const int ROUND_SCORE = 10;
+
 #endif

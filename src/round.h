@@ -43,7 +43,7 @@ class Round : public QObject {
         /**
          * @brief The score achieved in the Round.
          *
-         * If the user's answer is correct, the score is incremented by 10.
+         * If the user's answer is correct, the score is incremented by @ref ROUND_SCORE.
          *
          * Nothing happens otherwise.
          */
