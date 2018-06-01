@@ -6,9 +6,8 @@
 
 #include <QTimer>
 
-Game::Game(Database *data, MainWindow *window) {
+Game::Game(Database *data) {
     this->data = data;
-    this->window = window;
 
     this->score = 0;
     this->roundsPassed = 0;
@@ -18,8 +17,8 @@ Game::Game(Database *data, MainWindow *window) {
     this->generator = new QRandomGenerator(time.hour() + time.minute() + time.second() + time.msec());
 }
 
-void Game::updateWindow() {
-    this->currentRound->focusWidget(this->window);
+void Game::addWidgetToStack(QStackedWidget *stack) {
+    this->currentRound->addWidgetToStack(stack);
 }
 
 void Game::start() {
@@ -41,8 +40,6 @@ void Game::startNewRound() {
     this->data->markQuestionUsed(questionId);
 
     this->currentRound = new Round(question);
-
-    QObject::connect(this->currentRound, SIGNAL(windowNeedsUpdate()), this, SLOT(updateWindow()));
 
     QObject::connect(this->currentRound, SIGNAL(next()), this, SLOT(nextRound()));
 

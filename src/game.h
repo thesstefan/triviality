@@ -34,11 +34,6 @@ class Game : public QObject {
         Database *data;
 
         /**
-         * @brief The MainWindow used to show the RoundWidget instances on.
-         */
-        MainWindow *window;
-
-        /**
          * @brief The number of Round instances that have passed.
          */
         int roundsPassed;
@@ -64,10 +59,8 @@ class Game : public QObject {
          * @brief Constructs the Game.
          *
          * @param data -> The Database used for the Question extractions.
-         *
-         * @param window -> The MainWindow used by the Game.
          */
-        Game(Database *data, MainWindow *window);
+        Game(Database *data);
 
         /**
          * @brief Starts a new Round.
@@ -84,6 +77,11 @@ class Game : public QObject {
          */
         void start();
 
+        /**
+         * @brief Calls addWidgetToStack() on the current RoundWidget.
+         */
+        void addWidgetToStack(QStackedWidget *widget);
+
     public slots:
         /**
          * @brief This @b SLOT creates a new Round and deletes the current one.
@@ -93,11 +91,6 @@ class Game : public QObject {
          * If the number of rounds passed exceeds @ref ROUNDS_NUMBER, this emits gameEnded().
          */
         void nextRound();
-
-        /**
-         * @brief Updates the MainWindow with the current round's RoundWidget.
-         */
-        void updateWindow();
 
         /**
          * @brief Deletes the Round.

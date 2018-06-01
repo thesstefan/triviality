@@ -63,6 +63,7 @@ class GameController : public QObject {
          * @brief Announces Quiz that the Game ended.
          *
          * @param score -> The score of the ended Game.
+         */
         void gameEnded(int score);
 };
 

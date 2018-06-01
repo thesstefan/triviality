@@ -11,3 +11,5 @@ OpenFail::OpenFail(const std::string& message) : Exception(message) {}
 ReadFail::ReadFail(const std::string& message) : Exception(message) {}
 
 OutOfBounds::OutOfBounds(const std::string& message) : Exception(message) {}
+
+WidgetMismatch::WidgetMismatch(const std::string& message) : Exception(message) {}
