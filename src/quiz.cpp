@@ -49,6 +49,8 @@ void Quiz::back() {
 }
 
 void Quiz::startGame() {
+    this->data->resetUsageTracker();
+
     this->gameController->startGame();
 
     this->stack->setCurrentIndex(GAME_INDEX);
@@ -61,9 +63,5 @@ void Quiz::closeApp() {
 }
 
 Quiz::~Quiz() {
-    /*
-    this->menuWidget->deleteLater();
-    */
-
     this->window->deleteLater();
 }
