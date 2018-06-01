@@ -5,13 +5,11 @@ Quiz::Quiz(Database *data) {
 
     this->window = new MainWindow();
 
-    this->menuWidget = new MenuWidget(this->window);
+    this->menuController = new MenuController(this);
 
-    this->window->setCentralWidget(this->menuWidget);
+    this->menuController->connectButtons(this, SLOT(startGame()), SLOT(closeApp()));
 
-    this->menuWidget->connectStartButton(this, SLOT(startGame()));
-
-    this->menuWidget->connectExitButton(this, SLOT(closeApp()));
+    this->menuController->focus(this->window);
 }
 
 void Quiz::run() {
@@ -33,12 +31,12 @@ void Quiz::back() {
 
     this->scoreController->deleteLater();
 
-    this->window->setCentralWidget(this->menuWidget);
-
-    this->menuWidget->show();
+    this->menuController->focus(this->window);
 }
 
 void Quiz::startGame() {
+    this->menuController->stopFocus(this->window);
+
     this->currentGame = new Game(this->data, this->window);
 
     QObject::connect(this->currentGame, SIGNAL(gameEnded(int)), this, SLOT(showScore(int)));
