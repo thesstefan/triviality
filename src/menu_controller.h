@@ -9,6 +9,7 @@
 #define MENU_CONTROLLER_H
 
 #include <QObject>
+#include <QStackedWidget>
 
 #include "menu_widget.h"
 #include "main_window.h"
@@ -74,6 +75,15 @@ class MenuController : public QObject {
          * @param exitSlot -> The @b slot to be connected to the exit PushButton.
          */
         void connectButtons(QObject *receiver, const char *startSlot, const char *exitSlot);
+
+        /**
+         * @brief Adds the MenuWidget to a QStackedWidget.
+         *
+         * @param stack -> The QStackedWidget to add to.
+         *
+         * Note that Quiz needs the MenuWidget to be at index @ref MENU_INDEX in the QStackedWidget.
+         */
+        void addWidgetToStack(QStackedWidget *stack);
 };
 
 #endif

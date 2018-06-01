@@ -24,3 +24,6 @@ void MenuController::connectButtons(QObject *receiver, const char *startSlot, co
 
     this->widget->connectExitButton(receiver, exitSlot);
 }
+
+void MenuController::addWidgetToStack(QStackedWidget *stack) {
+    stack->addWidget(this->widget);
