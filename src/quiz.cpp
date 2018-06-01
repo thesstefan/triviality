@@ -39,6 +39,8 @@ void Quiz::run() {
 }
 
 void Quiz::showScore(int score) {
+    this->scoreController->updateScore(score);
+
     this->stack->setCurrentIndex(SCORE_INDEX);
 }
 
