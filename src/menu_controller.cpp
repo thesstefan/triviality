@@ -8,17 +8,6 @@ MenuController::~MenuController() {
     this->widget->deleteLater();
 }
 
-void MenuController::focus(MainWindow *window) {
-    window->setCentralWidget(this->widget);
-}
-
-void MenuController::stopFocus(MainWindow *window) {
-    QWidget *temp = window->takeCentralWidget();
-
-    if (temp != this->widget)
-        throw WidgetMismatch("MenuController::stopFocus() -> Wrong QWidget from takeCentralWidget()");
-}
-
 void MenuController::connectButtons(QObject *receiver, const char *startSlot, const char *exitSlot) {
     this->widget->connectStartButton(receiver, startSlot);
 
@@ -27,3 +16,4 @@ void MenuController::connectButtons(QObject *receiver, const char *startSlot, co
 
 void MenuController::addWidgetToStack(QStackedWidget *stack) {
     stack->addWidget(this->widget);
+}

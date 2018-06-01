@@ -5,11 +5,33 @@ Quiz::Quiz(Database *data) {
 
     this->window = new MainWindow();
 
+    this->stack = new QStackedWidget(this->window);
+
+    this->init(this->stack, data);
+
+    this->stack->setCurrentIndex(MENU_INDEX);
+
+    this->window->setCentralWidget(this->stack);
+}
+
+void Quiz::init(QStackedWidget *stack, Database *data) {
     this->menuController = new MenuController(this);
 
     this->menuController->connectButtons(this, SLOT(startGame()), SLOT(closeApp()));
 
-    this->menuController->focus(this->window);
+    this->menuController->addWidgetToStack(stack);
+
+    this->gameController = new GameController(data, this);
+
+    QObject::connect(this->gameController, SIGNAL(gameEnded(int)), this, SLOT(showScore(int)));
+
+    this->gameController->addWidgetToStack(stack);
+
+    this->scoreController = new ScoreController(0, this);
+
+    this->scoreController->connectButtons(this, SLOT(back()), SLOT(closeApp()));
+
+    this->scoreController->addWidgetToStack(stack);
 }
 
 void Quiz::run() {
@@ -17,31 +39,17 @@ void Quiz::run() {
 }
 
 void Quiz::showScore(int score) {
-    this->currentGame->deleteLater();
-    
-    this->scoreController = new ScoreController(score, this);
-
-    this->scoreController->focus(this->window);
-
-    this->scoreController->connectButtons(this, SLOT(back()), SLOT(closeApp()));
+    this->stack->setCurrentIndex(SCORE_INDEX);
 }
 
 void Quiz::back() {
-    this->scoreController->stopFocus(this->window);
-
-    this->scoreController->deleteLater();
-
-    this->menuController->focus(this->window);
+    this->stack->setCurrentIndex(MENU_INDEX);
 }
 
 void Quiz::startGame() {
-    this->menuController->stopFocus(this->window);
+    this->gameController->startGame();
 
-    this->currentGame = new Game(this->data, this->window);
-
-    QObject::connect(this->currentGame, SIGNAL(gameEnded(int)), this, SLOT(showScore(int)));
-
-    this->currentGame->start();
+    this->stack->setCurrentIndex(GAME_INDEX);
 }
 
 void Quiz::closeApp() {

@@ -30,6 +30,9 @@ class GameController : public QObject {
         /** @brief The Database used to construct the Game. **/
         Database *data;
 
+        /** @brief Creates and connects to slots a Game instance. **/
+        void createGame();
+
     public:
         /**
          * @brief Constructs the GameController.
@@ -39,6 +42,11 @@ class GameController : public QObject {
          * @param parent -> The QObject parent.
          */
         GameController(Database *data, QObject *parent = 0);
+
+        /**
+         * @brief Destructs the GameController.
+         */
+        ~GameController();
 
         /**
          * @brief Creates and starts a Game.

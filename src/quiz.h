@@ -9,10 +9,20 @@
 
 #include <QObject>
 
-#include "game.h"
 #include "main_window.h"
-#include "menu_widget.h"
+
+#include "game_controller.h"
 #include "score_controller.h"
+#include "menu_controller.h"
+
+/** @brief The index of MenuWidget in the QStackedWidget. **/
+const int MENU_INDEX = 0;
+
+/** @brief The index of RoundWidget in the QStackedWidget. **/
+const int GAME_INDEX = 1;
+
+/** @brief The index of ScoreWidget in the QStackedWidget. **/
+const int SCORE_INDEX = 2;
 
 /**
  * @class Quiz
@@ -37,6 +47,11 @@ class Quiz : public QObject {
     Q_OBJECT
 
     private:
+        /**
+         * @brief The QStackedWidget containing the widgets used.
+         */
+        QStackedWidget *stack;
+
         /*
          * @brief The Database used for the Question extraction used in Game.
          */
@@ -48,19 +63,28 @@ class Quiz : public QObject {
         MainWindow *window;
 
         /**
-         * @brief The MenuWidget used to display the menu.
+         * @brief The MenuController used to manage the menu display.
          */
-        MenuWidget *menuWidget;
+        MenuController *menuController;
 
         /**
          * @brief The current Game instance.
          */
-        Game *currentGame;
+        GameController *gameController;
 
         /**
          * @brief The ScoreContoller used to manage the score display.
          */
         ScoreController *scoreController;
+
+        /**
+         * @brief Constructs the internal controllers used by Quiz.
+         *
+         * @param widget -> The QStackedWidget used to display the widgets.
+         *
+         * @param data -> The Database used to construct GameController instances.
+         */
+        void init(QStackedWidget *widget, Database *data);
 
     public:
         /**
