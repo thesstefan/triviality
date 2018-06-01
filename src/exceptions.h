@@ -1,3 +1,6 @@
+#ifndef EXCEPTIONS_H
+#define EXCEPTIONS_H
+
 /**
  * @file exceptions.h
  *
@@ -94,3 +97,5 @@ class WidgetMismatch : public Exception {
          */
         WidgetMismatch(const std::string &message);
 };
+
+#endif
