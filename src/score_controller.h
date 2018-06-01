@@ -53,6 +53,13 @@ class ScoreController : public QObject {
         ~ScoreController();
 
         /**
+         * @brief Updates the score displayed on the ScoreWidget.
+         *
+         * @param score -> The new score to be displayed.
+         */
+        void updateScore(int score);            
+
+        /**
          * @brief Connects the 2 PushButtons of ScoreWidget to 2 slots.
          *
          * @param receiver -> The owner of the @b slots.

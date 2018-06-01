@@ -8,6 +8,10 @@ ScoreController::~ScoreController() {
     this->widget->deleteLater();
 }
 
+void ScoreController::updateScore(int score) {
+    this->widget->updateScore(score);
+}
+
 void ScoreController::connectButtons(QObject *receiver, const char *backSlot, const char *closeSlot) {
     this->widget->connectBackButton(receiver, backSlot);
 
