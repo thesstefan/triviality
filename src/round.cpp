@@ -24,12 +24,10 @@ void Round::sync() {
 
 void Round::start() {
     this->sync();
-
-    emit windowNeedsUpdate();
 }
 
-void Round::focusWidget(MainWindow *window) {
-    window->setCentralWidget(this->widget);
+void Round::addWidgetToStack(QStackedWidget *stack) {
+    stack->addWidget(this->widget);
 }
 
 int Round::getScore() const {

@@ -8,6 +8,7 @@
 #define ROUND_H
 
 #include <QObject>
+#include <QStackedWidget>
 
 #include "question.h"
 #include "round_widget.h"
@@ -77,11 +78,11 @@ class Round : public QObject {
         void start();
 
         /**
-         * @brief Sets the RoundWidget as central widget for a MainWindow.
+         * @brief Adds the RoundWidget to a QStackedWidget.
          *
-         * @param window -> The MainWindow to set the RoundWidget as central.
+         * @param stack -> The QStackedWidget to add to.
          */
-        void focusWidget(MainWindow *window);
+        void addWidgetToStack(QStackedWidget *stack);
 
         /**
          * @brief Returns the score of the Round.
@@ -109,11 +110,6 @@ class Round : public QObject {
          * @brief This @b SIGNAL alerts the Game to switch to the next Round.
          */
         void next();
-
-        /**
-         * @brief This @b SIGNAL alerts the Game that the MainWindow needs to be updated.
-         */
-        void windowNeedsUpdate();
 };
 
 #endif
