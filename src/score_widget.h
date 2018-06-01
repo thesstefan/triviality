@@ -52,6 +52,13 @@ class ScoreWidget : public QWidget {
         ScoreWidget(int score, QWidget *parent = 0);
 
         /**
+         * Updates the score in ScoreWidget.
+         *
+         * @param score -> The new score to be displayed.
+         */
+        void updateScore(int score);
+
+        /**
          * Connect the close PushButton to a @b slot.
          *
          * @param receiver -> The QObject which owns the @b slot.

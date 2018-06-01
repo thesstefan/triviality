@@ -48,3 +48,7 @@ void ScoreWidget::connectCloseButton(QObject *receiver, const char *slot) {
 void ScoreWidget::connectBackButton(QObject *receiver, const char *slot) {
     QObject::connect(this->backButton, SIGNAL(clicked()), receiver, slot);
 }
+
+void ScoreWidget::updateScore(int score) {
+    this->scoreLabel->setText(QString::number(score));
+}
