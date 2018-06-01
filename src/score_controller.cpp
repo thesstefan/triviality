@@ -24,3 +24,7 @@ void ScoreController::connectButtons(QObject *receiver, const char *backSlot, co
 
     this->widget->connectCloseButton(receiver, closeSlot);
 }
+
+void ScoreController::addWidgetToStack(QStackedWidget *stack) {
+    stack->addWidget(this->widget);
+}

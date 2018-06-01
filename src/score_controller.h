@@ -9,6 +9,7 @@
 #define SCORE_CONTROLLER_H
 
 #include <QObject>
+#include <QStackedWidget>
 
 #include "score_widget.h"
 #include "main_window.h"
@@ -76,6 +77,15 @@ class ScoreController : public QObject {
          * @param closeSlot -> The @b slot to be connected to the close PushButton.
          */
         void connectButtons(QObject *receiver, const char *backSlot, const char *closeSlot);
+
+        /**
+         * @brief Adds the ScoreWidget to a QStackedWidget.
+         *
+         * @param stack -> The QStackedWidget to add to.
+         *
+         * Note that Quiz needs the QStackedWidget to have ScoreWidget at index @ref SCORE_WIDGET.
+         */
+        void addWidgetToStack(QStackedWidget *stack);
 };
 
 #endif
