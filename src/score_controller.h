@@ -53,21 +53,6 @@ class ScoreController : public QObject {
         ~ScoreController();
 
         /**
-         * @brief Sets ScoreWidget as the central widget on MainWindow.
-         *
-         * @param window -> The MainWindow to be used.
-         */
-        void focus(MainWindow *window);
-
-        /**
-         * @brief Removes ScoreWidget from MainWindow and gets the ownership back.
-         *
-         * @exception WidgetMismatch -> When the QWidget returned by MainWindow::takeCentralWidget() is 
-         * not the one managed by ScoreController.
-         */
-        void stopFocus(MainWindow *window);
-
-        /**
          * @brief Connects the 2 PushButtons of ScoreWidget to 2 slots.
          *
          * @param receiver -> The owner of the @b slots.
