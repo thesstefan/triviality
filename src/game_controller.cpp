@@ -1,69 +1,21 @@
-/**
- * @file game_controller.h
- *
- * @brief This module provides the interface of GameController, used to manage the relationship between
- * Quiz and Game.
- */
+#include "game_controller.h"
 
-#ifndef GAME_CONTROLLER_H
-#define GAME_CONTROLLER_H
+GameController::GameController(Database *data, QObject *parent) : QObject(parent), data(data) {}
 
-#include <QObject>
-#include <QStackedWidget>
+void GameController::startGame() {
+    this->game = new Game(this->data);
 
-#include "game.h"
+    QObject::connect(this->game, SIGNAL(gameEnded(int)), this, SLOT(endGame(int)));
 
-/**
- * @class GameController
- *
- * @brief This class manages the connection between Quiz and Game.
- *
- * It manages the Game creation and it's also used to get the static RoundWidget in the QStackedWidget.
- */
-class GameController : public QObject {
-    Q_OBJECT
+    this->game->start()
+}
 
-    private:
-        /** @brief The Game managed. **/
-        Game *game;
+void GameController::addWidgetToStack(QStackedWidget *stack) {
+    this->game->addWidgetToStack(stack);
+}
 
-        /** @brief The Database used to construct the Game. **/
-        Database *data;
+void GameController::endGame(int score) {
+    this->game->deleteLater();
 
-    public:
-        /**
-         * @brief Constructs the GameController.
-         *
-         * @param data -> The Database used to create Game instances.
-         *
-         * @param parent -> The QObject parent.
-         */
-        GameController(Database *data, QObject *parent = 0);
-
-        /**
-         * @brief Creates and starts a Game.
-         */
-        void startGame();
-
-        /**
-         * @brief Calls addWidgetToStack on Round.
-         */
-        void addWidgetToStack(QStackedWidget *stack);
-
-    public slots:
-        /**
-         * @brief Called when the Game ended.
-         *
-         * @param score -> The score of the ended Game.
-         */
-        void endGame(int score);
-
-    signals:
-        /**
-         * @brief Announces Quiz that the Game ended.
-         *
-         * @param score -> The score of the ended Game.
-        void gameEnded(int score);
-};
-
-#endif
+    emit gameEnded(score);
+}
