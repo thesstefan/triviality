@@ -27,6 +27,9 @@ void Round::start() {
 }
 
 void Round::addWidgetToStack(QStackedWidget *stack) {
+    if (this->widget == nullptr)
+        this->widget = new RoundWidget();
+
     stack->addWidget(this->widget);
 }
 

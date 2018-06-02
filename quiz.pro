@@ -12,7 +12,10 @@ SOURCES += src/main.cpp \
            src/round_widget.cpp \
            src/score_widget.cpp \
            src/game.cpp \
-           src/quiz.cpp
+           src/quiz.cpp \
+           src/score_controller.cpp \
+           src/menu_controller.cpp \
+           src/game_controller.cpp
 
 HEADERS += src/push_button.h \
            src/menu_widget.h \
@@ -25,7 +28,10 @@ HEADERS += src/push_button.h \
            src/round_widget.h \
            src/score_widget.h \
            src/game.h \
-           src/quiz.h
+           src/quiz.h \
+           src/score_controller.h \
+           src/menu_controller.h \
+           src/game_controller.h
 
 RESOURCES += data/data.qrc
 
