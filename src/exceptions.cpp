@@ -13,3 +13,5 @@ ReadFail::ReadFail(const std::string& message) : Exception(message) {}
 OutOfBounds::OutOfBounds(const std::string& message) : Exception(message) {}
 
 WidgetMismatch::WidgetMismatch(const std::string& message) : Exception(message) {}
+
+ConnectionError::ConnectionError(const std::string& message) : Exception(message) {}
