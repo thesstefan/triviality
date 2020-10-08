@@ -6,22 +6,24 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
-const QString NetworkDatabase::TEST_QUERY = 
-    QString("https://opentdb.com/api.php?amount=1&type=boolean");
-
-NetworkDatabase::NetworkDatabase(const QString& serverQuery, QObject *parent) 
-    : QObject(parent), Database(), networkRequest(QUrl(serverQuery)) {
-
-    QObject::connect(&networkManager, &QNetworkAccessManager::finished,
-                     this, &NetworkDatabase::onConnection);
-
+NetworkDatabase::NetworkDatabase(const QUrl& serverQuery, QObject *parent) 
+    : QObject(parent), Database(), networkController(serverQuery) {
+    
     this->read();
-}
+ }
 
 NetworkDatabase::~NetworkDatabase() {}
 
 void NetworkDatabase::read() {
-    this->networkManager.get(this->networkRequest);
+    this->networkController.executeRequest();
+
+    int networkStatus = this->networkController.getStatus();
+    QJsonObject jsonObject = this->networkController.getObject();
+
+    if (networkStatus != 0 || jsonObject.isEmpty())
+        throw ConnectionError("Connection Failed: " + std::to_string(networkStatus));
+
+    this->fillDatabase(jsonObject);
 }
 
 QString NetworkDatabase::decodeString(const QString& string) {
@@ -29,9 +31,6 @@ QString NetworkDatabase::decodeString(const QString& string) {
 }
 
 void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
-    if (connectionError)
-        throw ConnectionError("Connection Failed: " + std::to_string(connectionError));
-
     int responseCode = JSON_data[QString("response_code")].toInt(); 
     if (responseCode != 0)
         throw ConnectionError("Query Failed: " + std::to_string(responseCode));
@@ -61,26 +60,14 @@ void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
     }
 }
 
-void NetworkDatabase::setQuery(const QString& serverQuery) {
-    this->networkRequest = QNetworkRequest(QUrl(serverQuery));
-}
+void NetworkDatabase::testConnection() {
+    this->networkController.testConnection();
 
-void NetworkDatabase::onConnection(QNetworkReply *reply) {
-    if (reply->error() != QNetworkReply::NoError) {
-        this->networkManager.clearAccessCache();
-
-        reply->deleteLater();
-
-        connectionError = reply->error();
-    } 
-
-    this->fillDatabase(QJsonDocument::fromJson(reply->readAll()).object());
+    const int controllerStatus = this->networkController.getStatus();
+    if (controllerStatus != 0)
+        throw ConnectionError("Connection Failed: " + std::to_string(controllerStatus));
 }
 
 void NetworkDatabase::resetUsageTracker() {
     this->read();
-}
-
-void NetworkDatabase::connectionTest() {
-    this->networkManager.get(QNetworkRequest(QUrl(TEST_QUERY)));
 }

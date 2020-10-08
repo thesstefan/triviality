@@ -6,7 +6,7 @@
 #include "network_database.h"
 #include "macros.h"
 
-const QString 
+const QUrl 
     SERVER_QUERY("https://opentdb.com/api.php?type=multiple&encode=url3986&amount=" + 
                  QString::number(ROUNDS_NUMBER));
 
@@ -15,8 +15,8 @@ const QString
 
 std::unique_ptr<Database> databaseFactory() {
     try {
-        std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(SERVER_QUERY));
-        onlineDatabase->connectionTest();
+        std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(QUrl(SERVER_QUERY)));
+        onlineDatabase->testConnection();
 
         return onlineDatabase;
     } catch (const ConnectionError& exception) {
@@ -28,7 +28,7 @@ std::unique_ptr<Database> databaseFactory() {
 
         return localDatabase;
     } catch (const Exception& exception) {
-            qDebug() << exception.what() << Qt::endl;
+        qDebug() << exception.what() << Qt::endl;
     }
 
     return nullptr;
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     int ret = app.exec();
 
-    qDebug() << "SUCCESS" << Qt::endl;
+    qDebug() << "SUCCESS";
 
-    return 0;
+    return ret
 }
