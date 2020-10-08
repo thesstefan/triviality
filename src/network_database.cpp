@@ -29,6 +29,9 @@ QString NetworkDatabase::decodeString(const QString& string) {
 }
 
 void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
+    if (connectionError)
+        throw ConnectionError("Connection Failed: " + std::to_string(connectionError));
+
     int responseCode = JSON_data[QString("response_code")].toInt(); 
     if (responseCode != 0)
         throw ConnectionError("Query Failed: " + std::to_string(responseCode));
@@ -68,7 +71,7 @@ void NetworkDatabase::onConnection(QNetworkReply *reply) {
 
         reply->deleteLater();
 
-        throw ConnectionError("Connection Error " + std::to_string(reply->error()));
+        connectionError = reply->error();
     } 
 
     this->fillDatabase(QJsonDocument::fromJson(reply->readAll()).object());

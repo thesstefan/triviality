@@ -1,5 +1,4 @@
 #include <QApplication>
-
 #include <QWidget>
 
 #include "quiz.h"
@@ -7,48 +6,46 @@
 #include "network_database.h"
 #include "macros.h"
 
-#include <iostream>
+const QString 
+    SERVER_QUERY("https://opentdb.com/api.php?type=multiple&encode=url3986&amount=" + 
+                 QString::number(ROUNDS_NUMBER));
 
-void run_quiz(Database &database, QApplication &app) {
-    Quiz quiz(&database);
+const QString
+    LOCAL_DATABASE_PATH(":/data.txt");
 
-    QObject::connect(&quiz, SIGNAL(kill()), &app, SLOT(quit()));
+std::unique_ptr<Database> databaseFactory() {
+    try {
+        std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(SERVER_QUERY));
+        onlineDatabase->connectionTest();
 
-    quiz.run();
+        return onlineDatabase;
+    } catch (const ConnectionError& exception) {
+        qDebug() << exception.what() << Qt::endl;
+    }
+
+    try {
+        std::unique_ptr<FileDatabase> localDatabase(new FileDatabase(LOCAL_DATABASE_PATH));
+
+        return localDatabase;
+    } catch (const Exception& exception) {
+            qDebug() << exception.what() << Qt::endl;
+    }
+
+    return nullptr;
 }
 
 int main(int argc, char *argv[]) {
-    const QString 
-        SERVER_QUERY("https://opentdb.com/api.php?type=multiple&encode=url3986&amount=" + 
-                      QString::number(ROUNDS_NUMBER));
-
     QApplication app(argc, argv);
 
-    NetworkDatabase online_database(SERVER_QUERY);
-//    online_database.connectionTest();
-/*
-    try {
-        online_database.connectionTest();
+    std::unique_ptr<Database> database = databaseFactory();
 
-        run_quiz(online_database, app);
-    
-        Quiz quiz(&database);
-        QObject::connect(&quiz, SIGNAL(kill()), &app, SLOT(quit()));
-        quiz.run();
-    } catch (const ConnectionError& exception) {
-        
-        qDebug() << exception.what();
-*/
-        FileDatabase local_database(":/data.txt");
+    Quiz quiz(database.get());
 
-        Quiz quiz(&online_database);
-        QObject::connect(&quiz, SIGNAL(kill()), &app, SLOT(quit()));
-        quiz.run();
-//    }
+    QObject::connect(&quiz, SIGNAL(kill()), &app, SLOT(quit()));
 
     int ret = app.exec();
 
-    std::cout << "SUCCESS" << std::endl;
+    qDebug() << "SUCCESS" << Qt::endl;
 
-    return ret;
+    return 0;
 }

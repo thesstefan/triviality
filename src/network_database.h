@@ -22,6 +22,13 @@ class NetworkDatabase : public QObject, public Database {
 
     private:
         /**
+         * @brief Used to circumvent the fact that slots can't throw exceptions.
+         *        If connectionError is different than 0, then fillDatabase() throws
+         *        a @ref ConnectionError
+         */
+        int connectionError = 0;
+
+        /**
          * @brief The query used to test connection.
          *        It asks for a True/False question. (the game asks only for multiple choice)
          *        If the parser ecounters such a question, it knows that the request is just
@@ -51,7 +58,7 @@ class NetworkDatabase : public QObject, public Database {
          *
          * @param JSON_data The JSON data to be parsed.
          *
-         * @exception @ref ConnectionProblem on a query fail.
+         * @exception @ref ConnectionProblem on a query/slot connection fail.
          */
         void fillDatabase(const QJsonObject& JSON_data);
 
