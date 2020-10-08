@@ -68,7 +68,7 @@ void NetworkDatabase::onConnection(QNetworkReply *reply) {
 
         reply->deleteLater();
 
-        throw ConnectionError("Connection Error");
+        throw ConnectionError("Connection Error " + std::to_string(reply->error()));
     } 
 
     this->fillDatabase(QJsonDocument::fromJson(reply->readAll()).object());
