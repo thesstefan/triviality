@@ -40,7 +40,7 @@ class MenuController : public QObject {
          *
          * @param parent -> The QObject parent of MenuController.
          */
-        MenuController(QObject *parent = 0);
+        MenuController(bool online, QObject *parent = 0);
 
         /**
          * @brief Destructs the MenuController.

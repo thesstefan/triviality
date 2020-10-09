@@ -14,6 +14,7 @@
 #include "game_controller.h"
 #include "score_controller.h"
 #include "menu_controller.h"
+#include "network_controller.h"
 
 /** @brief The index of MenuWidget in the QStackedWidget. **/
 const int MENU_INDEX = 0;
@@ -47,6 +48,11 @@ class Quiz : public QObject {
     Q_OBJECT
 
     private:
+        /**
+         * @brief The network controller that tests the connection.
+         */
+        NetworkController *networkController;
+
         /**
          * @brief The QStackedWidget containing the widgets used.
          */
@@ -85,6 +91,11 @@ class Quiz : public QObject {
          * @param data -> The Database used to construct GameController instances.
          */
         void init(QStackedWidget *widget, Database *data);
+
+        /**
+         * @brief Uses the NetworkController to check connection.
+         */
+        bool isOnline();
 
     public:
         /**

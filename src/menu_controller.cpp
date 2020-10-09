@@ -1,7 +1,7 @@
 #include "menu_controller.h"
 
-MenuController::MenuController(QObject *parent) : QObject(parent) {
-    this->widget = new MenuWidget();
+MenuController::MenuController(bool online, QObject *parent) : QObject(parent) {
+    this->widget = new MenuWidget(online);
 }
 
 MenuController::~MenuController() {
