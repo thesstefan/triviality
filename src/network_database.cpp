@@ -6,23 +6,27 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#include <QEventLoop>
+
 NetworkDatabase::NetworkDatabase(const QUrl& serverQuery, QObject *parent) 
     : QObject(parent), Database(), networkController(serverQuery) {
     
-    this->read();
- }
+//    this->read();
+}
 
 NetworkDatabase::~NetworkDatabase() {}
 
 void NetworkDatabase::read() {
     this->networkController.executeRequest();
 
-    qDebug() << "YES";
+    QEventLoop loop;
+    connect(&(this->networkController), SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
 
     int networkStatus = this->networkController.getStatus();
     QJsonObject jsonObject = this->networkController.getObject();
 
-    if (networkStatus != QNetworkReply::NoError)
+    if (networkStatus != QNetworkReply::NoError || jsonObject.isEmpty())
         throw ConnectionError("Connection Failed: " + std::to_string(networkStatus));
 
     this->fillDatabase(jsonObject);
@@ -65,9 +69,17 @@ void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
 void NetworkDatabase::testConnection() {
     this->networkController.testConnection();
 
-    const int controllerStatus = this->networkController.getStatus();
-    if (controllerStatus != QNetworkReply::NoError)
-        throw ConnectionError("Connection Failed: " + std::to_string(controllerStatus));
+    QEventLoop loop;
+    connect(&(this->networkController), SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    int networkStatus = this->networkController.getStatus();
+    QJsonObject jsonObject = this->networkController.getObject();
+
+    if (networkStatus != QNetworkReply::NoError || jsonObject.isEmpty())
+        throw ConnectionError("Connection Failed: " + std::to_string(networkStatus));
+
+    this->fillDatabase(jsonObject);
 }
 
 void NetworkDatabase::resetUsageTracker() {

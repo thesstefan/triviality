@@ -50,4 +50,6 @@ void NetworkController::onConnection(QNetworkReply *reply) {
     } 
 
     this->jsonObject = QJsonDocument::fromJson(reply->readAll()).object();
+
+    emit finished();
 }

@@ -17,9 +17,10 @@ std::unique_ptr<Database> databaseFactory() {
     try {
         std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(QUrl(SERVER_QUERY)));
         onlineDatabase->testConnection();
+        onlineDatabase->resetUsageTracker();
 
         return onlineDatabase;
-    } catch (const ConnectionError& exception) {
+    } catch (const Exception& exception) {
         qDebug() << exception.what() << Qt::endl;
     }
 
@@ -47,5 +48,5 @@ int main(int argc, char *argv[]) {
 
     qDebug() << "SUCCESS";
 
-    return ret
+    return ret;
 }

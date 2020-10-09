@@ -82,6 +82,10 @@ class NetworkController : public QObject {
          *        Otherwise, the error status is changed.
          */ 
         void testConnection();
+
+    signals:
+        /** @brief Signal emitted when the connection was made / error was encountered. **/
+        void finished();
 };
 
 #endif
