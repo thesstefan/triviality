@@ -7,7 +7,7 @@
  */
 
 #ifndef NETWORKCONTROLLER_H
-#define NETWORK_CONTROLLER_H
+#define NETWORKCONTROLLER_H
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>

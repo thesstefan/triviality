@@ -8,6 +8,7 @@
 #define MENUWIDGET_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 
 #include "push_button.h"
 
@@ -34,13 +35,23 @@ class MenuWidget : public QWidget {
          */
         PushButton *exitButton;
 
+        // Private implementation functions
+        QVBoxLayout *createMainLayout(bool online);
+        QVBoxLayout *createButtonLayout();
+
     public:
+        /** @brief Color to use for the network status bar when ONLINE. **/
+        const static QColor ONLINE;
+
+        /** @brief Color to use for the network status bar when ONLINE. **/
+        const static QColor OFFLINE;
+
         /**
          * @brief Constructs the MenuWidget.
          *
          * @param parent -> The QWidget parent.
          */
-        MenuWidget(QWidget *parent = 0);
+        MenuWidget(bool online, QWidget *parent = 0);
 
         /**
          * @brief Connects the start PushButton to a @b slot.
