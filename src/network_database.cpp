@@ -17,10 +17,12 @@ NetworkDatabase::~NetworkDatabase() {}
 void NetworkDatabase::read() {
     this->networkController.executeRequest();
 
+    qDebug() << "YES";
+
     int networkStatus = this->networkController.getStatus();
     QJsonObject jsonObject = this->networkController.getObject();
 
-    if (networkStatus != 0 || jsonObject.isEmpty())
+    if (networkStatus != QNetworkReply::NoError)
         throw ConnectionError("Connection Failed: " + std::to_string(networkStatus));
 
     this->fillDatabase(jsonObject);
@@ -32,7 +34,7 @@ QString NetworkDatabase::decodeString(const QString& string) {
 
 void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
     int responseCode = JSON_data[QString("response_code")].toInt(); 
-    if (responseCode != 0)
+    if (responseCode != QNetworkReply::NoError)
         throw ConnectionError("Query Failed: " + std::to_string(responseCode));
 
     const QJsonArray array = JSON_data[QString("results")].toArray();
@@ -64,7 +66,7 @@ void NetworkDatabase::testConnection() {
     this->networkController.testConnection();
 
     const int controllerStatus = this->networkController.getStatus();
-    if (controllerStatus != 0)
+    if (controllerStatus != QNetworkReply::NoError)
         throw ConnectionError("Connection Failed: " + std::to_string(controllerStatus));
 }
 

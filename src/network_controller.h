@@ -11,6 +11,7 @@
 
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QJsonObject>
 
 /**
@@ -36,7 +37,7 @@ class NetworkController : public QObject {
         *        0 for success,
         *        reply error for anything else
         */
-       int status;
+       int status = QNetworkReply::NoError;
        
        /** @brief The received JSON data. **/
        QJsonObject jsonObject;
