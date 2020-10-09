@@ -1,5 +1,5 @@
 /**
- * @file file_database.cpp
+ * @file file_database.h
  *
  * This module provides the inteface of FileDatabase, derived of Database.
  */
@@ -55,18 +55,18 @@ class FileDatabase : public Database {
         /**
          * @brief Reads a Question from the file. 
          *
-         * @note A stream is used => Multiple read() calls do not read the same Question.
+         * @note A stream is used => Multiple readEntry() calls do not read the same Question.
          *
          * @exception ReadFail -> If the file is corrupted / not formatted properly.
          */
-        void read();
+        void readEntry();
 
         /**
          * @brief Reads all the Question instances from the file.
          *
          * @exception ReadFail -> If the file is corrupted / not formatted properly.
          */
-        void readAll();
+        void read();
 
     public:
         /**

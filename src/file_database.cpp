@@ -18,7 +18,7 @@ FileDatabase::FileDatabase(const QString& fileName) : Database() {
     this->stream = new QTextStream(this->file);
 
     try {
-        this->readAll();
+        this->read();
     } catch (const Exception& exception) {
         throw;
     }
@@ -32,7 +32,7 @@ FileDatabase::~FileDatabase() {
     delete this->file;
 }
 
-void FileDatabase::read() {
+void FileDatabase::readEntry() {
     QString question = this->stream->readLine();
 
     if (question == "")
@@ -67,10 +67,10 @@ void FileDatabase::read() {
     this->data.append(entry);
 }
 
-void FileDatabase::readAll() {
+void FileDatabase::read() {
     while (this->stream->atEnd() == false) {
         try {
-            this->read();
+            this->readEntry();
         } catch (const Exception& exception) {
             QString errorMsg = QString("Could not read data : ") + QString(exception.what());
 

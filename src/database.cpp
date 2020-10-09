@@ -55,19 +55,19 @@ void Database::write(const QString& outputFile) {
 
     QTextStream out(&file);
 
-    out << "Database Size : " << this->size() << " Questions" << endl << endl;
+    out << "Database Size : " << this->size() << " Questions" << Qt::endl << Qt::endl;
 
     for (int entryIndex = 0; entryIndex < this->size(); entryIndex++) {
         Question question = this->data.at(entryIndex);
 
-        out << question.getQuestion() << endl;
+        out << question.getQuestion() << Qt::endl;
 
-        out << "Correct Answers : " << question.getCorrectAnswer() << endl;
+        out << "Correct Answers : " << question.getCorrectAnswer() << Qt::endl;
 
         for (int answerIndex = 0; answerIndex < ANSWERS_NUMBER; answerIndex++)
-            out << question.getAnswer(answerIndex) << endl;
+            out << question.getAnswer(answerIndex) << Qt::endl;
 
-        out << endl;
+        out << Qt::endl;
     }
 }
 #endif

@@ -1,4 +1,4 @@
-QT = widgets
+QT += widgets network 
 
 SOURCES += src/main.cpp \
            src/menu_widget.cpp \
@@ -6,6 +6,8 @@ SOURCES += src/main.cpp \
            src/question.cpp \
            src/database.cpp \
            src/file_database.cpp \
+           src/network_database.cpp \
+           src/network_controller.cpp \
            src/exceptions.cpp \
            src/main_window.cpp \
            src/round.cpp \
@@ -22,6 +24,8 @@ HEADERS += src/push_button.h \
            src/question.h \
            src/database.h \
            src/file_database.h \
+           src/network_database.h \
+           src/network_controller.h \
            src/exceptions.h \
            src/main_window.h \
            src/round.h \
