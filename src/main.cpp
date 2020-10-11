@@ -5,6 +5,7 @@
 #include "file_database.h"
 #include "network_database.h"
 #include "macros.h"
+#include "sql_database.h"
 
 const QUrl 
     SERVER_QUERY("https://opentdb.com/api.php?type=multiple&encode=url3986&amount=" + 
@@ -13,13 +14,26 @@ const QUrl
 const QString
     LOCAL_DATABASE_PATH(":/data.txt");
 
+const QString
+    SQL_LOCAL_DATABASE_PATH("data/triviality.db");
+
 std::unique_ptr<Database> databaseFactory() {
+    /*
     try {
         std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(QUrl(SERVER_QUERY)));
         onlineDatabase->testConnection();
         onlineDatabase->resetUsageTracker();
 
         return onlineDatabase;
+    } catch (const Exception& exception) {
+        qDebug() << exception.what() << Qt::endl;
+    }
+    */
+
+    try {
+        std::unique_ptr<SQL_LocalDatabase> sql_localDatabase(new SQL_LocalDatabase(SQL_LOCAL_DATABASE_PATH));
+
+        return sql_localDatabase;
     } catch (const Exception& exception) {
         qDebug() << exception.what() << Qt::endl;
     }
