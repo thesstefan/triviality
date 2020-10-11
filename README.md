@@ -18,8 +18,11 @@ qmake && make
 ```bash
 ./quiz
 ```
+# Gameplay
+<p align="center">
+  <img src="https://github.com/thesstefan/triviality/blob/readme/master/gameplay.gif" alt="Gameplay GIF"/>
+</p>
 # TODO:
-
 1. [ ] Add ability to switch between data sources in-game.
 2. [ ] Add time limit and time based scoring. 
 3. [ ] Add new game modes (eg. Blitz) and power-ups (eg. 50/50)
@@ -28,8 +31,3 @@ qmake && make
 6. [ ] Improve local databases (+ contribute to [OpenTDB](https://opentdb.com)) 
 7. [ ] Add sound effects.
 8. [ ] Improve general aesthetics of the game.
-
-# Gameplay
-<p align="center">
-  <img src="https://github.com/thesstefan/triviality/blob/readme/extra/gameplay.gif" alt="Gameplay GIF"/>
-</p>
