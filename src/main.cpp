@@ -18,7 +18,6 @@ const QString
     SQL_LOCAL_DATABASE_PATH("data/triviality.db");
 
 std::unique_ptr<Database> databaseFactory() {
-    /*
     try {
         std::unique_ptr<NetworkDatabase> onlineDatabase(new NetworkDatabase(QUrl(SERVER_QUERY)));
         onlineDatabase->testConnection();
@@ -28,7 +27,6 @@ std::unique_ptr<Database> databaseFactory() {
     } catch (const Exception& exception) {
         qDebug() << exception.what() << Qt::endl;
     }
-    */
 
     try {
         std::unique_ptr<SQL_LocalDatabase> sql_localDatabase(new SQL_LocalDatabase(SQL_LOCAL_DATABASE_PATH));
