@@ -8,6 +8,7 @@
 
 #include <QEventLoop>
 
+
 NetworkDatabase::NetworkDatabase(const QUrl& serverQuery, QObject *parent) 
     : QObject(parent), Database(), networkController(serverQuery) {
     
@@ -59,7 +60,13 @@ void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
         for (QJsonValue incorrect_answer : (questionData[QString("incorrect_answers")].toArray()))
             answers.append(this->decodeString(incorrect_answer.toString()));
 
-        Question question(this->decodeString(questionData[QString("question")].toString()), 0,
+        auto rng = std::default_random_engine {};
+        std::shuffle(answers.begin(), answers.end(), rng);
+
+        const int correctAnswerIndex = answers.indexOf(correctAnswer);
+
+        Question question(this->decodeString(questionData[QString("question")].toString()), 
+                          correctAnswerIndex,
                           answers);
 
         this->data.append(question);
