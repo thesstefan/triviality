@@ -1,5 +1,5 @@
 /**
- * @file file_database.cpp
+ * @file network_database.h
  *
  * This module provides the inteface of NetworkDatabase, derived of Database.
  *
