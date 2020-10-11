@@ -1,11 +1,11 @@
 # Triviality 
 
-Trivia game written in C and Qt5. The game has three possibilities sources of data:
+Trivia game written in C++ and Qt5. The game has three possibilities sources of data:
 
 1. The [Open Trivia Database](https://opentdb.com). The game goes online and requests
 so called question-packs under JSON form, which are parsed and then used in-game.
-2. Local SQLite database
-3. Local text file format 
+2. Local SQLite database.
+3. Local text file format. 
 
 # Installation
 ```bash
