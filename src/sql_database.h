@@ -42,13 +42,6 @@ class SQL_LocalDatabase : public Database {
          */
         void read();
 
-        /**
-         * @brief Reads one question from the local SQL database.
-         *
-         * @exception @ref ReadError on read / connection error.
-         */
-        void readEntry();
-
     public:
         /**
          * @brief Constructs the SQL_LocalDatabase and creates the necessary connections.

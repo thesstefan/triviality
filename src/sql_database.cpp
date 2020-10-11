@@ -10,7 +10,7 @@ const QString SQL_LocalDatabase::DRIVER
     ("QSQLITE");
 
 const QString SQL_LocalDatabase::GENERAL_QUESTION_QUERY
-    ("SELECT * FROM questionnaire ORDER BY RANDOM() LIMIT 1");
+    ("SELECT * FROM questionnaire ORDER BY RANDOM() LIMIT " + QString::number(ROUNDS_NUMBER));
 
 SQL_LocalDatabase::SQL_LocalDatabase(const QString& databasePath,
                                      const QString& queryString) : 
@@ -40,7 +40,7 @@ void SQL_LocalDatabase::setQueryString(const QString& queryString) {
     this->queryString = queryString;
 }
 
-void SQL_LocalDatabase::readEntry() {
+void SQL_LocalDatabase::read() {
     if (this->query.prepare(this->queryString) == false)
         throw ReadFail("SQL: " + query.lastError().text().toStdString());
 
@@ -50,25 +50,19 @@ void SQL_LocalDatabase::readEntry() {
     if (!query.first())
         throw ReadFail("SQL: Failed query" + query.lastError().text().toStdString());
 
-    QString question_text = query.value("question_text").toString();
-    QList<QString> answers;
+    while (query.isValid()) {
+        QString question_text = query.value("question_text").toString();
+        QList<QString> answers;
 
-    answers.append(query.value("correct_answer").toString());
-    answers.append(query.value("incorrect_answer_1").toString());
-    answers.append(query.value("incorrect_answer_2").toString());
-    answers.append(query.value("incorrect_answer_3").toString());
+        answers.append(query.value("correct_answer").toString());
+        answers.append(query.value("incorrect_answer_1").toString());
+        answers.append(query.value("incorrect_answer_2").toString());
+        answers.append(query.value("incorrect_answer_3").toString());
 
-    Question entry(question_text, 0, answers);
+        Question entry(question_text, 0, answers);
 
-    this->data.append(entry);
-}
+        this->data.append(entry);
 
-void SQL_LocalDatabase::read() {
-
-    for (int i = 0; i < ROUNDS_NUMBER; i++)
-        try {
-            this->readEntry();
-        } catch (const Exception& exception) {
-            throw exception;
-        }
+        query.next();
+    }
 }
