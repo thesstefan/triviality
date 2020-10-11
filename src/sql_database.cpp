@@ -54,12 +54,18 @@ void SQL_LocalDatabase::read() {
         QString question_text = query.value("question_text").toString();
         QList<QString> answers;
 
-        answers.append(query.value("correct_answer").toString());
+        const QString correctAnswer = query.value("correct_answer").toString();
+        answers.append(correctAnswer);
         answers.append(query.value("incorrect_answer_1").toString());
         answers.append(query.value("incorrect_answer_2").toString());
         answers.append(query.value("incorrect_answer_3").toString());
 
-        Question entry(question_text, 0, answers);
+        auto rng = std::default_random_engine {};
+        std::shuffle(answers.begin(), answers.end(), rng);
+
+        const int correctAnswerIndex = answers.indexOf(correctAnswer);
+
+        Question entry(question_text, correctAnswerIndex, answers);
 
         this->data.append(entry);
 
