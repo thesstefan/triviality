@@ -20,7 +20,7 @@ qmake && make
 ```
 # Gameplay
 <p align="center">
-  <img src="https://github.com/thesstefan/triviality/blob/master/readme/gameplay.gif" alt="Gameplay GIF"/>
+  <img src="https://github.com/thesstefan/triviality/blob/master/extra/gameplay.gif" alt="Gameplay GIF"/>
 </p>
 
 # TODO:
