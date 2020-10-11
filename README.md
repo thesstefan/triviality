@@ -20,8 +20,9 @@ qmake && make
 ```
 # Gameplay
 <p align="center">
-  <img src="https://github.com/thesstefan/triviality/blob/readme/master/gameplay.gif" alt="Gameplay GIF"/>
+  <img src="https://github.com/thesstefan/triviality/blob/master/readme/gameplay.gif" alt="Gameplay GIF"/>
 </p>
+
 # TODO:
 1. [ ] Add ability to switch between data sources in-game.
 2. [ ] Add time limit and time based scoring. 
