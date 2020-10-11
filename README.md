@@ -10,6 +10,7 @@ so called question-packs under JSON form, which are parsed and then used in-game
 # Installation
 ```bash
 git clone https://github.com/thesstefan/triviality
+cd triviality
 qmake && make
 ```
 
@@ -29,3 +30,6 @@ qmake && make
 8. [ ] Improve general aesthetics of the game.
 
 # Gameplay
+<p align="center">
+  <img src="https://github.com/thesstefan/triviality/blob/readme/extra/gameplay.gif" alt="Gameplay GIF"/>
+</p>

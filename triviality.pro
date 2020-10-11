@@ -45,6 +45,6 @@ OBJECTS_DIR = build
 MOC_DIR = build
 RCC_DIR = data
 
-TARGET = quiz
+TARGET = triviality
 
 DEFINES += DEBUG
