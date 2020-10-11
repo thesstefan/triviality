@@ -1,5 +1,7 @@
 #include "quiz.h"
 
+#include <QEventLoop>
+
 Quiz::Quiz(Database *data) {
     this->data = data;
 
@@ -14,23 +16,29 @@ Quiz::Quiz(Database *data) {
     this->window->setCentralWidget(this->stack);
 }
 
+bool Quiz::isOnline() {
+    this->networkController->testConnection();
+
+    QEventLoop loop;
+    connect(this->networkController, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    return this->networkController->getStatus() == QNetworkReply::NoError;
+}
+
 void Quiz::init(QStackedWidget *stack, Database *data) {
-    this->menuController = new MenuController(this);
+    this->networkController = new NetworkController(this);
 
+    this->menuController = new MenuController(this->isOnline(), this);
     this->menuController->connectButtons(this, SLOT(startGame()), SLOT(closeApp()));
-
     this->menuController->addWidgetToStack(stack);
 
     this->gameController = new GameController(data, this);
-
     QObject::connect(this->gameController, SIGNAL(gameEnded(int)), this, SLOT(showScore(int)));
-
     this->gameController->addWidgetToStack(stack);
 
     this->scoreController = new ScoreController(0, this);
-
     this->scoreController->connectButtons(this, SLOT(back()), SLOT(closeApp()));
-
     this->scoreController->addWidgetToStack(stack);
 }
 

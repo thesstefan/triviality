@@ -6,7 +6,7 @@ const QColor PushButton::WRONG = QColor(200, 20, 20);
 
 PushButton::PushButton(QWidget *parent) : QPushButton(parent) {
     this->setFlat(true);
-    this->setFixedSize(500, 100);
+    this->setFixedSize(600, 100);
 
     this->colorize(this->DEFAULT);
 }

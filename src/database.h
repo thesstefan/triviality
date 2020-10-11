@@ -7,6 +7,10 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include <random>
+#include <algorithm>
+#include <chrono>
+
 #include <QList>
 #include <QString>
 
@@ -43,7 +47,7 @@ class Database {
          * This method is intended to be used inside the constructor of the derived class. 
          *
          * This method is also intended to pe private in the derived classes because the
-         * Database interface focuses on managing the data (not reading / writing it).
+         * Database interface focuses on managing the data (not eeading / writing it).
          */
         virtual void read() = 0;
 
@@ -114,7 +118,7 @@ class Database {
          *
          * Every Question will be "marked" as not used.
          */
-        void resetUsageTracker();
+        virtual void resetUsageTracker();
 
         /**
          * @brief Returns Database's size.

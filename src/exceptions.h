@@ -98,4 +98,15 @@ class WidgetMismatch : public Exception {
         WidgetMismatch(const std::string &message);
 };
 
+class ConnectionError : public Exception {
+    public:
+        /**
+         * @brief Constructs the Exception, assigning it a message.
+         *
+         * @param message -> The message of WidgetMismatch.
+         */
+        ConnectionError(const std::string &message);
+};
+
+
 #endif
