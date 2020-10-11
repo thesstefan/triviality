@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
             "border: none;"
             );
 
-    this->setFixedSize(550, 600);
+    this->setFixedSize(650, 700);
 
     this->show();
 }
