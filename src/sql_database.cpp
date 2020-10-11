@@ -60,7 +60,8 @@ void SQL_LocalDatabase::read() {
         answers.append(query.value("incorrect_answer_2").toString());
         answers.append(query.value("incorrect_answer_3").toString());
 
-        auto rng = std::default_random_engine {};
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        auto rng = std::default_random_engine(seed);
         std::shuffle(answers.begin(), answers.end(), rng);
 
         const int correctAnswerIndex = answers.indexOf(correctAnswer);

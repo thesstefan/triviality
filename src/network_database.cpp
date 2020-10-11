@@ -60,7 +60,8 @@ void NetworkDatabase::fillDatabase(const QJsonObject& JSON_data) {
         for (QJsonValue incorrect_answer : (questionData[QString("incorrect_answers")].toArray()))
             answers.append(this->decodeString(incorrect_answer.toString()));
 
-        auto rng = std::default_random_engine {};
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        auto rng = std::default_random_engine(seed);
         std::shuffle(answers.begin(), answers.end(), rng);
 
         const int correctAnswerIndex = answers.indexOf(correctAnswer);

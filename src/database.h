@@ -9,6 +9,7 @@
 
 #include <random>
 #include <algorithm>
+#include <chrono>
 
 #include <QList>
 #include <QString>
